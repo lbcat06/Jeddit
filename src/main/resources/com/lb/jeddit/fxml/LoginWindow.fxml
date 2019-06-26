@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXCheckBox?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.Rectangle?>
+<fx:root prefHeight="600.0" prefWidth="1000.0" stylesheets="@../css/LoginWindow.css" type="javafx.scene.layout.AnchorPane" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <TextField fx:id="usernameTextField" layoutX="600.0" layoutY="220.0" prefHeight="40.0" prefWidth="200.0" promptText="Username" />
+      <PasswordField fx:id="passwordField" layoutX="600.0" layoutY="265.0" prefHeight="40.0" prefWidth="200.0" promptText="Password" />
+      <Button fx:id="loginBtn" layoutX="600.0" layoutY="370.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="199.0" text="LOGIN" />
+      <Label fx:id="skipLogin" layoutX="650.0" layoutY="419.0" text="Skip Login" />
+      <HBox layoutX="150.0" layoutY="165.0" prefHeight="270.0" prefWidth="281.0" styleClass="hbox">
+         <children>
+            <ImageView fitHeight="106.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true" styleClass="logo" />
+            <Region prefHeight="300.0" prefWidth="16.0" />
+            <Label prefHeight="58.0" prefWidth="149.0" text="Jeddit" />
+         </children>
+      </HBox>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="300.0" layoutX="500.0" layoutY="150.0" stroke="BLACK" strokeType="INSIDE" styleClass="separator" width="1.0" />
+      <JFXCheckBox fx:id="rememberCheckbox" layoutX="601.0" layoutY="330.0" styleClass="jfxcheckbox" text=" Remember me" />
+      <StackPane layoutX="389.0" layoutY="542.0" prefHeight="58.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         <children>
+            <Label fx:id="statusLabel" styleClass="status" />
+         </children>
+      </StackPane>
+   </children>
+</fx:root>

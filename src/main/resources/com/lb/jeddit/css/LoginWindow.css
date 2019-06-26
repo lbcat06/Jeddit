@@ -1,0 +1,79 @@
+* {
+    -fx-primary: #1e1e1e;
+    -fx-secondary: #191919;
+    -fx-tertiary: #242424;
+
+    -fx-accent-1: #54d4e5;
+    -fx-accent-2: #ff6347;
+	-fx-accent-1-hover: #000000;
+	-fx-accent-2-hover: #fc7962;
+
+    -fx-text-primary: #eeeef2;
+
+    -fx-background-color: -fx-primary;
+   	-fx-font-family: monospace;
+}
+
+/* Login button */
+.button {
+	-fx-background-color: -fx-accent-2;
+	-fx-cursor: hand;
+}
+
+.button:hover {
+	-fx-background-color: -fx-accent-2-hover;
+}
+
+/* hbox */ 
+.hbox {
+	-fx-alignment: center;
+}
+
+/* Jeddit logo */
+.logo {
+	-fx-image: url("../images/logo.png");
+}
+
+/* Jeddit title */
+.label {
+	-fx-font-size: 40px;
+	-fx-text-fill: -fx-text-primary;
+}
+
+/* Username + Password */
+.text-field {
+	-fx-text-fill: -fx-text-primary;
+	-fx-border-width: 0 0 1px 0;
+}
+
+.text-field:focused {
+	-fx-border-color: -fx-accent-2;
+}
+
+.separator {
+	-fx-stroke: #333333;
+	-fx-border: none;
+}
+
+/* Remember me checkbox */
+.jfxcheckbox {
+	-fx-text-fill: -fx-text-primary;
+	-jfx-checked-color: -fx-accent-2;
+	-fx-cursor: hand;
+}
+
+/* Status label */
+.status {
+	-fx-font-size: 13px;
+	-fx-text-alignment: center;
+}
+
+#skipLogin {
+	-fx-font-size: 14px;
+	-fx-cursor: hand;
+	-fx-padding: 7px;
+}
+
+#skipLogin:hover {
+	-fx-background-color: rgba(0,0,0,0.2);
+}
