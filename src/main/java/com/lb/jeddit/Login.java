@@ -1,39 +1,39 @@
 package com.lb.jeddit;
 
 import com.lb.jeddit.controllers.LoginWindowController;
+import com.squareup.moshi.Moshi;
 import javafx.application.Platform;
 import javafx.scene.control.Label;
 import net.dean.jraw.RedditClient;
 import net.dean.jraw.http.NetworkAdapter;
 import net.dean.jraw.http.OkHttpNetworkAdapter;
 import net.dean.jraw.http.UserAgent;
-import net.dean.jraw.oauth.AccountHelper;
-import net.dean.jraw.oauth.Credentials;
-import net.dean.jraw.oauth.OAuthHelper;
-import net.dean.jraw.oauth.StatefulAuthHelper;
+import net.dean.jraw.models.Account;
+import net.dean.jraw.models.OAuthData;
+import net.dean.jraw.models.PersistedAuthData;
+import net.dean.jraw.oauth.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 
+import java.io.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.UUID;
 import java.util.logging.Level;
 
-//import org.openqa.selenium.htmlunit.HtmlUnitDriver;
-
 public class Login {
 
-	private LoginWindowController lc = LoginWindowController.getInstance();
+	//private LoginWindowController lc = LoginWindowController.getInstance();
 	private static Login login;
 
-	private String username;
-	private String password;
-	private String authUrl;
+	private String username, password, authUrl;
 
 	//Change scene
 	private boolean rememberMe;
-	private boolean loginSuccessful=false;
 	private Label statusLabel;
 
 	private StatefulAuthHelper helper;
@@ -42,10 +42,7 @@ public class Login {
 	private Credentials credentials;
 
 	//Count how many times to retry login on fail
-	private int count = 0;
-
-	//Create headerless browser
-	private WebDriver driver = new HtmlUnitDriver();
+	//private int count = 0;
 
 	private static String[] scopes = {
 			"identity",
@@ -65,29 +62,31 @@ public class Login {
 
 	/** CONSTRUCTOR */
 	public Login(String username, String password, boolean rememberMe, Label statusLabel) {
-		//Status connecting to server
-		login = this;
-		//lc.connectingToServer();
+		//login = this;
 		this.username = username;
 		this.password = password;
 		this.rememberMe = rememberMe;
 		this.statusLabel = statusLabel;
 
-		createConnection();
-	}
-
-	private void createConnection() {
-		//Status
 		Platform.runLater(new Runnable() {
 			@Override
 			public void run() {
-				statusLabel.setText("connecting to server...");
+				statusLabel.setText("logging in...");
 			}
 		});
 
-		//Suppress htmlunit warnings
-		java.util.logging.Logger.getLogger("com.gargoylesoftware").setLevel(Level.OFF);
+		createConnection();
+		login();
+	}
 
+	//Saved data
+	public Login(String username) {
+		this.username = username;
+		createConnection();
+		readFromFile();
+	}
+
+	private void createConnection() {
 		//Set user agent
 		UserAgent userAgent = new UserAgent("bot", "com.example.usefulbot", "v0.1", username);
 
@@ -102,177 +101,118 @@ public class Login {
 
 		//Create authUrl and use in authorization
 		authUrl = helper.getAuthorizationUrl(true, true, scopes);
-
-		//Login method
-		login();
-
 	}
 
 	private void login() {
-		//Status logging in
-		Platform.runLater(new Runnable() {
-			@Override
-			public void run() {
-				try {
-					//Wait 0.5 sec extra as a buffer for ui to load
-					Thread.sleep(500);
-					statusLabel.setText("logging in...");
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-			}
-		});
+		WebDriver driver = new HtmlUnitDriver();
 
-		//Load login page
+		//Suppress htmlunit warnings
+		java.util.logging.Logger.getLogger("com.gargoylesoftware").setLevel(Level.OFF);
+
+		setStatus("fetching elements...");
+
+		//Load web page
 		driver.get(authUrl);
 
-		findMainElements();
+		//Find login elements
+//		try {
+//			if(count<3) {
+		WebElement usernameElement = driver.findElement(By.id("user_login"));
+		WebElement passwordElement = driver.findElement(By.id("passwd_login"));
 
-		//If invalid login
-		try {
-			if(loginSuccessful) {
-				challengeLogin();
-			} else {
-				return;
-			}
-		} catch (Exception e) {
-			count=0;
-			return;
-		}
+		//Convert username and password to charsequence
+		CharSequence usernameChar = username;
+		CharSequence passwordChar = password;
 
-		//Change Scene
-		Platform.runLater(new Runnable() {
-			@Override
-			public void run() {
-//				if(changeSceneBool) {
-//					//lc.changeScene();
-//				}
-			}
-		});
-	}
+		//Enter chars into fields
+		usernameElement.sendKeys(usernameChar);
+		passwordElement.sendKeys(passwordChar);
 
-	private void findMainElements() {
-		Platform.runLater(new Runnable() {
-			@Override
-			public void run() {
-				statusLabel.setText("fetching elements...");
-			}
-		});
-
-		//Find elements
-		try {
-			if(count<3) {
-				WebElement usernameElement = driver.findElement(By.id("user_login"));
-				WebElement passwordElement = driver.findElement(By.id("passwd_login"));
-
-				//Convert username and password to charsequence
-				CharSequence usernameChar = username;
-				CharSequence passwordChar = password;
-
-				//Enter chars into fields
-				usernameElement.sendKeys(usernameChar);
-				passwordElement.sendKeys(passwordChar);
-
-				//Submit username and password
-				passwordElement.submit();
-			}
-		} catch (NoSuchElementException nsee) {
-			count++;
-			findMainElements();
-			return;
-		}
-
-//			//Check if failed, redo up to 3 times, if exceeds 3 times login is invalid
-//		while(driver.getCurrentUrl().equals("https://www.reddit.com/post/login.compact") && count<3) {
-//
-//			//Buffer
-//			try {
-//				Thread.sleep(1000);
-//			} catch (InterruptedException e) {
-//				e.printStackTrace();
+		//Submit username and password
+		passwordElement.submit();
 //			}
-//
+//		} catch (NoSuchElementException nsee) {
 //			count++;
-//			driver.get(authUrl);
-//			findMainElements();
-//
-//			if(count==4) {
-//				//Unsuccessful Login
-//				Platform.runLater(new Runnable() {
-//					@Override
-//					public void run() {
-//						statusLabel.setText("cannot reach reddit after " + count + " attempts");
-//					}
-//				});
-//			}
-//
+//			login();
 //			return;
 //		}
 
-		//authorizing Login
-		Platform.runLater(new Runnable() {
-			@Override
-			public void run() {
-				statusLabel.setText("authorizing login...");
-			}
-		});
+		setStatus("authorizing login...");
 
 		try {
 			//Find authorize application(jeddit) button / trycatch since if not found meaning unsuccessful login
 			WebElement authorize = driver.findElement(By.name("authorize"));
 			authorize.submit();
-
-			loginSuccessful=true;
-
 		} catch (NoSuchElementException e) {
-			//status Unsuccessful Login
-			Platform.runLater(new Runnable() {
-				@Override
-				public void run() {
-					statusLabel.setText("invalid details");
-				}
-			});
+			setStatus("invalid details");
 		} catch (IllegalStateException ise) {
-			//status Unsuccessful Login
-			Platform.runLater(new Runnable() {
-				@Override
-				public void run() {
-					statusLabel.setText("cannot connect to reddit after " + count + " attempts");
-				}
-			});
+			setStatus("cannot connect to reddit");
 		}
-	}
 
-	private void challengeLogin() {
-		Platform.runLater(new Runnable() {
-			@Override
-			public void run() {
-				statusLabel.setText("challenging login...");
-			}
-		});
+		setStatus("challenging login...");
 
 		//Get code from redirect URI
 		String url = driver.getCurrentUrl();
 		redditClient = helper.onUserChallenge(url);
-
-		Platform.runLater(new Runnable() {
-			@Override
-			public void run() {
-				statusLabel.setText("successful login");
-			}
-		});
-
-		//Close connection
 		driver.quit();
+
+		setStatus("successful login");
+
+		if(rememberMe) {
+			saveToFile();
+			accounts.set(0, redditClient.me().getUsername());
+		}
+	}
+
+	private List<String> accounts = new ArrayList<>();
+
+	private void readFromFile() {
+		//Create token store
+		JsonFileTokenStore tokenStore = new JsonFileTokenStore(new File(System.getProperty("user.dir") + "/src/main/resources/com/lb/jeddit/persistent/"+username+"token.json"));
+
+		//Load token store information
+		tokenStore.load();
+
+		//Create helper
+		AccountHelper helper = new AccountHelper(networkAdapter, credentials, tokenStore, UUID.randomUUID());
+
+		//Return user
+		redditClient = helper.switchToUser(username);
 	}
 
 	private void saveToFile() {
-		redditClient.getAuthManager().getCurrent();
-		redditClient.getAuthManager().getTokenStore();
+		//Create tokenStore
+		JsonFileTokenStore tokenStore = new JsonFileTokenStore(new File(System.getProperty("user.dir") + "/src/main/resources/com/lb/jeddit/persistent/"+username+"token.json"));
 
+		//Update tokenStore with information
+		tokenStore.storeRefreshToken(redditClient.me().getUsername().toLowerCase(), redditClient.getAuthManager().getRefreshToken());
 
-		AccountHelper helper2 = new AccountHelper(networkAdapter, credentials, redditClient.getAuthManager().getTokenStore(), UUID.randomUUID());
+		//Save to file
+		tokenStore.persist();
+
+		//Save accounts list to file
+		try {
+			FileOutputStream fos = new FileOutputStream(System.getProperty("user.dir") + "/src/org/nice/reddit/resources/persistent/accounts.obj");
+			ObjectOutputStream oos = new ObjectOutputStream(fos);
+			oos.writeObject(accounts);
+			oos.flush();
+			oos.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		//System.out.println(readFromFile().me().karma());
 	}
+
+	private void setStatus(String status) {
+		Platform.runLater(new Runnable() {
+			@Override
+			public void run() {
+				statusLabel.setText(status);
+			}
+		});
+	}
+
 
 	/** GETTERS & SETTERS */
 	public static Login getInstance() {
