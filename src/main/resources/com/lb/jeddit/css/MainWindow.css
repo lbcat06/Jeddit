@@ -1,0 +1,404 @@
+/* Main Anchor Pane */
+#mainAnchorPane {
+    -fx-background-color: #1e1e1e;
+}
+
+#menuBar {
+    -fx-background-color: #191919;
+}
+
+#contentAnchorPane {
+    -fx-background-color: #1e1e1e;
+}
+
+/* Search text field */
+#searchSubreddit {
+    -fx-background-color: #242424;
+    -fx-text-fill: #eeeef2;
+    -fx-border-radius: 0.3em;
+}
+
+#searchSubreddit:focused {
+    -fx-background-color: #1e1e1e;
+    -fx-border-color: #eeeef2;
+}
+
+#searchTextField {
+    -fx-background-color: #242424;
+    -fx-text-fill: #eeeef2;
+    -fx-border-radius: 0.3em;
+}
+
+#searchTextField:focused {
+    -fx-background-color: #1e1e1e;
+    -fx-border-color: #eeeef2;
+}
+
+/* Hamburger */
+#hamburger StackPane{
+    -fx-background-color: #b4b4b7;
+    -fx-background-radius: 20px;
+    -fx-pref-width: 25px;
+}
+
+/* Drawer */
+#drawer {
+    -fx-background-color: transparent;
+}
+
+#drawerContent {
+    -fx-background-color: #191919;
+}
+
+#subscriptions {
+    -fx-background-color: transparent;
+    -fx-font-size: 10px;
+    -fx-text-fill: #eeeef2;
+}
+
+#subsBtn {
+    -fx-background-color: transparent;
+    -fx-background-radius: 0;
+    -fx-text-fill: #eeeef2;
+    -fx-font-size: 16px;
+}
+
+#subsBtn:hover {
+    -fx-background-color: #282828;
+}
+
+#homeButton {
+    -fx-background-image: url("../images/jreddit.png");
+    -fx-background-size: 28px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-color: transparent;
+    -fx-background-radius: 0;
+    -fx-background-position: center;
+
+    -fx-text-fill: #eeeef2;
+}
+
+#homeButton:hover {
+    -fx-background-color: #282828;
+}
+
+/* Scroll Pane */
+#drawerScrollPane {
+    -fx-background-color: transparent;
+    -fx-focus-color: transparent;
+}
+
+/* Scroll pane background */
+#drawerScrollPane > .viewport {
+    -fx-background-color: transparent;
+}
+
+#drawerScrollPane > .scroll-bar:horizontal, .scroll-bar:vertical{
+    -fx-background-color: transparent;
+    -fx-pref-width: 6px;
+}
+
+#drawerScrollPane > .decrement-button, .increment-button {
+    -fx-border-color: transparent;
+    -fx-opacity: 0;
+}
+
+#drawerScrollPane > .increment-button, .decrement-button {
+    -fx-border-color: transparent;
+    -fx-opacity: 0;
+}
+
+#drawerScrollPane > .scroll-bar:horizontal .track,
+#drawerScrollPane > .scroll-bar:vertical .track{
+    -fx-background-color: transparent;
+}
+
+#drawerScrollPane > .scroll-bar:horizontal .thumb,
+#drawerScrollPane > .scroll-bar:vertical .thumb {
+    -fx-background-color: #4a4a4a;
+    -fx-background-radius: 2px;
+}
+
+#drawerScrollPane > .scroll-pane > .corner {
+    -fx-background-color: transparent;
+}
+
+/* Menu Button */
+#menuButton {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-border-radius: 4px 4px 0 0;
+    -fx-border-width: 1px 1px 0 1px;
+    -fx-text-fill: #eeeef2;
+}
+
+#menuButton:hover {
+    -fx-border-width: 1px 1px 1px 1px;
+    -fx-border-radius: 4px 4px 4px 4px;
+    -fx-border-color: #505050;
+    -fx-cursor: hand;
+}
+
+#menuButton:focused {
+    -fx-border-radius: 4px 4px 0 0;
+    -fx-border-width: 1px 1px 0 1px;
+    -fx-border-color: #505050;
+}
+
+#menuButton .arrow {
+    -fx-background-color: #eeeef2;
+}
+
+#menuButton .label {
+    -fx-background-color: transparent;
+    -fx-text-fill: #eeeef2;
+}
+
+#menuButton .context-menu {
+    -fx-border-radius: 0 0 4px 4px;
+    -fx-background-radius: 0 0 4px 4px;
+    -fx-border-width: 0 1px 1px 1px;
+}
+
+.context-menu {
+    -fx-background-color: #191919;
+    -fx-border-radius: 4px 4px 4px 4px;
+    -fx-background-radius: 4px 4px 4px 4px;
+    -fx-border-color: #505050;
+    -fx-border-width: 1px 1px 1px 1px;
+}
+
+
+.menu-item .label {
+    -fx-background-color: transparent;
+    -fx-text-fill: #eeeef2;
+    -fx-font-size: 16px;
+}
+
+.menu-item:hover {
+    -fx-background-color: #282828;
+}
+
+.menu-item:focused {
+    -fx-background-color: #282828;
+}
+
+.separator {
+    -fx-opacity: 0.35;
+}
+/*********
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*!* Main Anchor Pane *!*/
+/*.main-background {*/
+    /*-fx-background-color: #1e1e1e;*/
+/*}*/
+
+/*!* Search text field *!*/
+/*.search-text-field {*/
+    /*-fx-background-color: #242424;*/
+    /*-fx-text-fill: #eeeef2;*/
+    /*-fx-border-radius: 0.3em;*/
+/*}*/
+
+/*.search-text-field:focused {*/
+    /*-fx-background-color: #1e1e1e;*/
+    /*-fx-border-color: #eeeef2;*/
+/*}*/
+
+/*!* Settings Button *!*/
+/*.settingsBtn {*/
+    /*-fx-background-image: url(../images/settings1.png);*/
+    /*-fx-background-size: 24px 24px;*/
+    /*-fx-rotate: 50px;*/
+    /*-fx-background-repeat: no-repeat;*/
+    /*-fx-background-position: center;*/
+    /*-fx-background-color: transparent;*/
+/*}*/
+
+/*!* Account Combo Box *!*/
+/*.accountComboBox {*/
+    /*-fx-background-color: red;*/
+/*}*/
+
+/*!* Hamburger *!*/
+/*.hamburger StackPane{*/
+    /*-fx-background-color: #b4b4b7;*/
+    /*-fx-background-radius: 20px;*/
+    /*-fx-pref-width: 25px;*/
+/*}*/
+
+/*!* Drawer *!*/
+/*.drawer {*/
+    /*-fx-background-color: transparent;*/
+/*}*/
+
+/*.drawerContent {*/
+    /*-fx-background-color: #191919;*/
+/*}*/
+
+/*.subscriptions {*/
+    /*-fx-background-color: transparent;*/
+    /*-fx-font-size: 10px;*/
+    /*-fx-text-fill: #eeeef2;*/
+/*}*/
+
+/*#subsBtn {*/
+    /*-fx-background-color: transparent;*/
+    /*-fx-background-radius: 0;*/
+    /*-fx-text-fill: #eeeef2;*/
+    /*-fx-font-size: 16px;*/
+/*}*/
+
+/*#subsBtn:hover {*/
+    /*-fx-background-color: #282828;*/
+/*}*/
+
+/*.homeIcon {*/
+    /*-fx-background-image: url("../images/jreddit.png");*/
+    /*-fx-background-size: 28px;*/
+    /*-fx-background-repeat: no-repeat;*/
+    /*-fx-background-color: transparent;*/
+    /*-fx-background-radius: 0;*/
+    /*-fx-background-position: center;*/
+
+    /*-fx-text-fill: #eeeef2;*/
+/*}*/
+
+/*.homeIcon:hover {*/
+    /*-fx-background-color: #282828;*/
+/*}*/
+
+/*!* Scroll Pane *!*/
+/*.drawerScrollPane {*/
+    /*-fx-background-color: transparent;*/
+    /*-fx-focus-color: transparent;*/
+/*}*/
+
+/*!* Scroll pane background *!*/
+/*.drawerScrollPane > .viewport {*/
+    /*-fx-background-color: transparent;*/
+/*}*/
+
+/*.drawerScrollPane > .scroll-bar:horizontal, .scroll-bar:vertical{*/
+    /*-fx-background-color: transparent;*/
+    /*-fx-pref-width: 6px;*/
+/*}*/
+
+/*.drawerScrollPane > .decrement-button, .increment-button {*/
+    /*-fx-border-color: transparent;*/
+    /*-fx-opacity: 0;*/
+/*}*/
+
+/*.drawerScrollPane > .increment-button, .decrement-button {*/
+    /*-fx-border-color: transparent;*/
+    /*-fx-opacity: 0;*/
+/*}*/
+
+/*.drawerScrollPane > .scroll-bar:horizontal .track,*/
+/*.drawerScrollPane > .scroll-bar:vertical .track{*/
+    /*-fx-background-color: transparent;*/
+/*}*/
+
+/*.drawerScrollPane > .scroll-bar:horizontal .thumb,*/
+/*.drawerScrollPane > .scroll-bar:vertical .thumb {*/
+    /*-fx-background-color: #4a4a4a;*/
+    /*-fx-background-radius: 2px;*/
+/*}*/
+
+/*.drawerScrollPane > .scroll-pane > .corner {*/
+    /*-fx-background-color: transparent;*/
+/*}*/
+
+/*!* Menu Button *!*/
+/*.menuButton {*/
+    /*-fx-background-color: transparent;*/
+    /*-fx-border-color: transparent;*/
+    /*-fx-border-radius: 4px 4px 0 0;*/
+    /*-fx-border-width: 1px 1px 0 1px;*/
+    /*-fx-text-fill: #eeeef2;*/
+/*}*/
+
+/*.menuButton:hover {*/
+    /*-fx-border-width: 1px 1px 1px 1px;*/
+    /*-fx-border-radius: 4px 4px 4px 4px;*/
+    /*-fx-border-color: #505050;*/
+    /*-fx-cursor: hand;*/
+/*}*/
+
+/*.menuButton:focused {*/
+    /*-fx-border-radius: 4px 4px 0 0;*/
+    /*-fx-border-width: 1px 1px 0 1px;*/
+    /*-fx-border-color: #505050;*/
+/*}*/
+
+/*.menuButton .arrow {*/
+    /*-fx-background-color: #eeeef2;*/
+/*}*/
+
+/*.menuButton .label {*/
+    /*-fx-background-color: transparent;*/
+    /*-fx-text-fill: #eeeef2;*/
+/*}*/
+
+/*.context-menu {*/
+    /*-fx-background-color: #191919;*/
+    /*-fx-border-radius: 4px 4px 4px 4px;*/
+    /*-fx-background-radius: 4px 4px 4px 4px;*/
+    /*-fx-border-color: #505050;*/
+    /*-fx-border-width: 1px 1px 1px 1px;*/
+/*}*/
+
+/*.menuButton .context-menu {*/
+    /*-fx-border-radius: 0 0 4px 4px;*/
+    /*-fx-background-radius: 0 0 4px 4px;*/
+    /*-fx-border-width: 0 1px 1px 1px;*/
+/*}*/
+
+/*.menu-item .label {*/
+    /*-fx-background-color: transparent;*/
+    /*-fx-text-fill: #eeeef2;*/
+    /*-fx-font-size: 16px;*/
+/*}*/
+
+/*.menu-item:hover {*/
+    /*-fx-background-color: #282828;*/
+/*}*/
+
+/*.menu-item:focused {*/
+    /*-fx-background-color: #282828;*/
+/*}*/
+
+/*.separator {*/
+    /*-fx-opacity: 0.35;*/
+/*}*/
+
