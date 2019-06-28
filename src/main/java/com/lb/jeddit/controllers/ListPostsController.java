@@ -18,13 +18,7 @@ public class ListPostsController extends ScrollPane {
 	private Client rc = Client.getInstance();
 
 	private static ListPostsController listPostsController;
-	private Runnable openPost = () -> {};
 	private VBox vBox = new VBox();
-	boolean once=false;
-	private boolean loading=false;
-	private boolean onceShrink=false;
-	private boolean breakLoop=false;
-	private String id;
 
 	/** CONSTRUCTOR */
 	private ListPostsController() {
@@ -42,8 +36,10 @@ public class ListPostsController extends ScrollPane {
 
 		//Space between each card
 		vBox.setSpacing(25);
-		vBox.setFillWidth(true);
+//		vBox.setFillWidth(true);
 		vBox.setAlignment(Pos.CENTER);
+		vBox.prefWidthProperty().bind(widthProperty());
+		vBox.prefHeightProperty().bind(heightProperty());
 
 		//Center cards
 //		vBox.translateXProperty().bind(widthProperty().subtract((vBox.widthProperty())).divide(2));
