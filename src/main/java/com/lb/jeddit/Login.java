@@ -1,16 +1,12 @@
 package com.lb.jeddit;
 
-import com.lb.jeddit.controllers.LoginWindowController;
-import com.squareup.moshi.Moshi;
+import com.lb.jeddit.models.Client;
 import javafx.application.Platform;
 import javafx.scene.control.Label;
 import net.dean.jraw.RedditClient;
 import net.dean.jraw.http.NetworkAdapter;
 import net.dean.jraw.http.OkHttpNetworkAdapter;
 import net.dean.jraw.http.UserAgent;
-import net.dean.jraw.models.Account;
-import net.dean.jraw.models.OAuthData;
-import net.dean.jraw.models.PersistedAuthData;
 import net.dean.jraw.oauth.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
@@ -18,9 +14,10 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 import java.util.logging.Level;
@@ -84,6 +81,7 @@ public class Login {
 		this.username = username;
 		createConnection();
 		readFromFile();
+		Client.getInstance().setRedditClient(redditClient);
 	}
 
 	private void createConnection() {

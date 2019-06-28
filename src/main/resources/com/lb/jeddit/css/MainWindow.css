@@ -1,37 +1,52 @@
+* {
+    -fx-primary: #1e1e1e;
+    -fx-secondary: #191919;
+    -fx-tertiary: #242424;
+
+    -fx-accent-1: #54d4e5;
+    -fx-accent-2: #ff6347;
+    -fx-accent-1-hover: #000000;
+    -fx-accent-2-hover: #fc7962;
+
+    -fx-text-primary: #eeeef2;
+    -fx-text-secondary: #333333;
+
+    -fx-font-family: monospace;
+    -fx-text-fill: -fx-text-primary;
+}
+
+
 /* Main Anchor Pane */
 #mainAnchorPane {
-    -fx-background-color: #1e1e1e;
+    -fx-background-color: -fx-primary;
 }
 
 #menuBar {
-    -fx-background-color: #191919;
+    -fx-background-color: -fx-secondary;
 }
 
 #contentAnchorPane {
-    -fx-background-color: #1e1e1e;
+    -fx-background-color: -fx-primary;
 }
 
-/* Search text field */
+/* Search text fields */
+.searchBar {
+    -fx-background-color: -fx-tertiary;
+    -fx-border-color: -fx-tertiary;
+    -fx-border-width: 0 0 1px 0;
+    -fx-border-radius: 0.3em;
+    -fx-background-radius: 0.3em;
+    -fx-font-size: 14px;
+}
+
+.searchBar:focused {
+    -fx-border-radius: 0;
+    -fx-background-radius: 0;
+    -fx-border-color: -fx-accent-2;
+}
+
 #searchSubreddit {
-    -fx-background-color: #242424;
-    -fx-text-fill: #eeeef2;
-    -fx-border-radius: 0.3em;
-}
-
-#searchSubreddit:focused {
-    -fx-background-color: #1e1e1e;
-    -fx-border-color: #eeeef2;
-}
-
-#searchTextField {
-    -fx-background-color: #242424;
-    -fx-text-fill: #eeeef2;
-    -fx-border-radius: 0.3em;
-}
-
-#searchTextField:focused {
-    -fx-background-color: #1e1e1e;
-    -fx-border-color: #eeeef2;
+    -fx-font-size: 12px;
 }
 
 /* Hamburger */
@@ -68,13 +83,14 @@
 }
 
 #homeButton {
-    -fx-background-image: url("../images/jreddit.png");
-    -fx-background-size: 28px;
+    -fx-padding: 5px;
+    -fx-background-image: url("../images/logo.png");
+    -fx-background-size: 25px;
     -fx-background-repeat: no-repeat;
     -fx-background-color: transparent;
     -fx-background-radius: 0;
     -fx-background-position: center;
-
+    -fx-cursor: hand;
     -fx-text-fill: #eeeef2;
 }
 

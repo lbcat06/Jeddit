@@ -1,0 +1,91 @@
+* {
+    -fx-primary: #1e1e1e;
+    -fx-secondary: #191919;
+    -fx-tertiary: #242424;
+
+    -fx-accent-1: #54d4e5;
+    -fx-accent-2: #ff6347;
+    -fx-accent-1-hover: #000000;
+    -fx-accent-2-hover: #fc7962;
+
+    -fx-text-primary: #eeeef2;
+    -fx-text-secondary: #333333;
+
+    -fx-font-family: monospace;
+    -fx-text-fill: -fx-text-primary;
+}
+
+/* Main Anchor Pane */
+#mainAnchorPane {
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-background-color: -fx-tertiary;
+}
+
+.transparent {
+    -fx-background-color: transparent;
+}
+
+/**********************************************/
+.label {
+    -fx-padding: 5px 10px 5px 10px;
+}
+
+.label:hover {
+    -fx-background-color: -fx-secondary;
+}
+
+/* Score buttons */
+.toolsBtn {
+    -fx-background-size: 25px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-color: transparent;
+    -fx-background-radius: 0;
+    -fx-background-position: center;
+    -fx-cursor: hand;
+}
+
+#score:hover {
+    -fx-background-color: transparent;
+}
+
+#upVoteBtn {
+    -fx-background-image: url("../images/up-24-grey.png");
+}
+
+#downVoteBtn {
+    -fx-background-image: url("../images/down-24-grey.png");
+}
+
+#commentCountBtn {
+    -fx-background-image: url("../images/comment.png");
+    -fx-background-position: left;
+    -fx-background-size: 21px;
+    -fx-padding: 5px 10px 5px 30px;
+}
+
+/**********************************************/
+
+.dynamicTextArea {
+    -fx-background-color: transparent;
+    -fx-font-size: 14px;
+}
+
+.dynamicTextArea .content {
+    -fx-background-color: transparent;
+}
+
+.dynamicTextArea .viewport {
+    -fx-background-color: transparent;
+}
+
+#title {
+    -fx-font-size: 18px;
+}
+
+#subreddit {
+    /* UNDERLINE */
+}
+/* -fx-font-family: "DejaVu Sans";*/
+
+/**********************************************/

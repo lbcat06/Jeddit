@@ -1,0 +1,8 @@
+* {
+    -fx-padding: 0;
+}
+
+.text-area .scroll-pane {
+    -fx-hbar-policy: NEVER;
+    -fx-vbar-policy: NEVER;
+}

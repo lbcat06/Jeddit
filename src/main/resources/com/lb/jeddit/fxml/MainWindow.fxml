@@ -2,25 +2,20 @@
 
 <?import com.jfoenix.controls.JFXDrawer?>
 <?import com.jfoenix.controls.JFXHamburger?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.MenuButton?>
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
-
 <fx:root fx:id="mainAnchorPane" prefHeight="600.0" prefWidth="1000.0" stylesheets="@../css/MainWindow.css" type="javafx.scene.layout.AnchorPane" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <AnchorPane fx:id="menuBar" prefHeight="85.0" prefWidth="900.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <children>
-         <TextField fx:id="searchTextField" prefHeight="47.0" prefWidth="415.0" promptText="Search Reddit" stylesheets="@../css/MainWindow.css" AnchorPane.bottomAnchor="19.0" AnchorPane.leftAnchor="220.0" AnchorPane.rightAnchor="220.0" AnchorPane.topAnchor="19.0">
+         <TextField fx:id="searchTextField" prefHeight="47.0" prefWidth="415.0" promptText="Search Reddit" styleClass="searchBar" stylesheets="@../css/MainWindow.css" AnchorPane.bottomAnchor="19.0" AnchorPane.leftAnchor="220.0" AnchorPane.rightAnchor="220.0" AnchorPane.topAnchor="19.0">
             <font>
                <Font size="14.0" />
             </font>
          </TextField>
          <JFXHamburger fx:id="hamburger" layoutX="33.0" layoutY="33.0" AnchorPane.leftAnchor="33.0" AnchorPane.topAnchor="33.0" />
          <MenuButton fx:id="menuButton" layoutX="822.0" layoutY="21.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="187.0" wrapText="true" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="20.0" />
-         <Button fx:id="homeButton" alignment="CENTER" graphicTextGap="0.0" layoutX="79.0" layoutY="26.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="40.0" AnchorPane.leftAnchor="79.0" AnchorPane.topAnchor="26.0">
+         <Button fx:id="homeButton" alignment="CENTER" graphicTextGap="0.0" layoutX="79.0" layoutY="26.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" AnchorPane.leftAnchor="79.0" AnchorPane.topAnchor="18.0">
             <font>
                <Font size="1.0" />
             </font>
@@ -28,13 +23,13 @@
       </children>
    </AnchorPane>
 <AnchorPane fx:id="contentAnchorPane" layoutX="10.0" layoutY="83.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="515.0" prefWidth="935.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="85.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" />
-   <JFXDrawer fx:id="drawer" defaultDrawerSize="200.0" mouseTransparent="true" prefHeight="600.0" prefWidth="167.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+   <JFXDrawer fx:id="drawer" defaultDrawerSize="200.0" mouseTransparent="true" prefHeight="600.0" prefWidth="216.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
       <children>
          <VBox fx:id="drawerContent" prefHeight="456.0" prefWidth="150.0">
             <children>
                <AnchorPane fx:id="drawerAnchorPane" prefHeight="80.0" prefWidth="150.0">
                   <children>
-                     <TextField fx:id="searchSubreddit" prefHeight="27.0" prefWidth="130.0" promptText="Search Subreddits" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="23.0">
+                     <TextField fx:id="searchSubreddit" prefHeight="27.0" prefWidth="130.0" promptText="Search Subreddits" styleClass="searchBar" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="23.0">
                         <font>
                            <Font size="11.0" />
                         </font>
