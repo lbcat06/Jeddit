@@ -89,3 +89,7 @@
 /* -fx-font-family: "DejaVu Sans";*/
 
 /**********************************************/
+
+.gilding:hover {
+    -fx-background-color: transparent
+}

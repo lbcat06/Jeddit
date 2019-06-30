@@ -19,7 +19,7 @@ public class App extends Application {
         if(new File(System.getProperty("user.dir") + "/src/main/resources/com/lb/jeddit/persistent").list().length > 0) {
             //Token exists, therefore skip login window and login straight to mainwindow
             Login login = new Login("niceorg");
-            scene = new Scene(new MainWindowController());
+            scene = new Scene(MainWindowController.getInstance());
         } else {
             //No token exists, request loginwindow for user to sign in
             scene = new Scene(new LoginWindowController());

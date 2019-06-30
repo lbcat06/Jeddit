@@ -1,0 +1,17 @@
+#scrollPane {
+    -fx-background-color: rgba(0,0,0,0.5);
+    -fx-focus-color: transparent;
+}
+
+#scrollPane .viewport {
+    -fx-background-color: rgba(0,0,0,0.5);
+}
+
+#stackPane {
+    -fx-alignment: center;
+}
+
+.label {
+    -fx-font-size: 20px;
+    -fx-text-fill: #eeeef2;
+}

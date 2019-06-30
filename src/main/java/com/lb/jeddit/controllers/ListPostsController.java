@@ -11,8 +11,6 @@ import net.dean.jraw.models.TimePeriod;
 
 import java.util.List;
 
-import static com.jfoenix.controls.JFXScrollPane.smoothScrolling;
-
 public class ListPostsController extends ScrollPane {
 
 	private Client rc = Client.getInstance();
@@ -29,21 +27,16 @@ public class ListPostsController extends ScrollPane {
 		setContent(vBox);
 		setHbarPolicy(ScrollBarPolicy.NEVER);
 
-		smoothScrolling(this);
+		//Utils.smoothScrolling(this);
 
 		getStylesheets().add("com/lb/jeddit/css/ListPosts.css");
 		setId("scrollPane");
 
 		//Space between each card
 		vBox.setSpacing(25);
-//		vBox.setFillWidth(true);
 		vBox.setAlignment(Pos.CENTER);
 		vBox.prefWidthProperty().bind(widthProperty());
 		vBox.prefHeightProperty().bind(heightProperty());
-
-		//Center cards
-//		vBox.translateXProperty().bind(widthProperty().subtract((vBox.widthProperty())).divide(2));
-//		vBox.prefWidthProperty().bind(widthProperty().subtract(widthProperty().multiply(0.1)));
 
 		//Load more cards on scroll
 
@@ -56,9 +49,14 @@ public class ListPostsController extends ScrollPane {
 	public void getFrontPage(SubredditSort subredditSort, TimePeriod timePeriod, boolean loadingNew) {
 		clearPosts();
 
-		for(int i=1; i<DEFAULT_ITERATION_COUNT; i++) {
-			createSubmissionCard(rc.getFrontPage(i, subredditSort, timePeriod));
-		}
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				for(int i=1; i<DEFAULT_ITERATION_COUNT; i++) {
+					createSubmissionCard(rc.getFrontPage(i, subredditSort, timePeriod));
+				}
+			}
+		}).start();
 	}
 
 	private void createSubmissionCard(List<Submission> submissionList) {
@@ -66,7 +64,7 @@ public class ListPostsController extends ScrollPane {
 
 			for(Submission submission : submissionList) {
 				ExpandedCardController expandedCardController = new ExpandedCardController(submission);
-				//expandedCardController.setOnMouseClicked(openPost(id));
+				//expandedCardController.setOnMouseClicked(openPost(submission));
 
 				Platform.runLater(new Runnable() {
 					@Override

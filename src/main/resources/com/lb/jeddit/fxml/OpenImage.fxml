@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
+<fx:root fx:id="scrollPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@../css/OpenImage.css" type="javafx.scene.control.ScrollPane" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <content>
+      <StackPane fx:id="stackPane" prefWidth="597.0">
+         <children>
+            <ImageView fx:id="imageView" fitHeight="278.0" fitWidth="596.0" pickOnBounds="true" preserveRatio="true" />
+            <AnchorPane prefHeight="200.0" prefWidth="200.0">
+               <children>
+                  <Label fx:id="closeBtn" layoutX="558.0" layoutY="5.0" prefHeight="24.0" prefWidth="9.0" text="X" AnchorPane.rightAnchor="8.0" AnchorPane.topAnchor="8.0" />
+               </children>
+            </AnchorPane>
+         </children>
+      </StackPane>
+   </content>
+</fx:root>

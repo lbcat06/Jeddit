@@ -2,6 +2,8 @@ package com.lb.jeddit.models;
 
 import net.dean.jraw.RedditClient;
 import net.dean.jraw.models.*;
+import net.dean.jraw.pagination.BarebonesPaginator;
+import net.dean.jraw.pagination.Paginator;
 import net.dean.jraw.references.SubmissionReference;
 import net.dean.jraw.tree.CommentNode;
 
@@ -85,7 +87,7 @@ public class Client {
 	public Listing<Submission> getFrontPage(int page, SubredditSort subredditSort, TimePeriod timePeriod) {
 		if(page==1) {
 			submissionIterator = redditClient.frontPage()
-					.limit(20)
+					.limit(10)
 					.sorting(subredditSort)
 					.timePeriod(timePeriod)
 					.build()
@@ -93,6 +95,21 @@ public class Client {
 		}
 
 		return submissionIterator.next();
+	}
+
+	//Get user subscriptions
+	public List<Subreddit> getSubscriptions() {
+		BarebonesPaginator<Subreddit> subredditBarebonesPaginator = redditClient.me().subreddits("subscriber")
+				.limit(Paginator.RECOMMENDED_MAX_LIMIT)
+				.build();
+
+		List<Subreddit> subscribed = new ArrayList<>();
+
+		for (Listing<Subreddit> subredditListing : subredditBarebonesPaginator) {
+			subscribed.addAll(subredditListing);
+		}
+
+		return subscribed;
 	}
 
 

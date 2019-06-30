@@ -4,17 +4,26 @@ import com.jfoenix.controls.JFXDrawer;
 import com.jfoenix.controls.JFXHamburger;
 import com.jfoenix.controls.events.JFXDrawerEvent;
 import com.lb.jeddit.Utils;
+import com.lb.jeddit.models.Client;
+import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import net.dean.jraw.models.Subreddit;
 import net.dean.jraw.models.SubredditSort;
 import net.dean.jraw.models.TimePeriod;
+
+import java.util.List;
+
+import static com.jfoenix.controls.JFXScrollPane.smoothScrolling;
 
 public class MainWindowController extends AnchorPane {
 
@@ -53,6 +62,8 @@ public class MainWindowController extends AnchorPane {
 	/*************************************/
 
 	private ListPostsController listPostsController = ListPostsController.getInstance();
+	private Client rc = Client.getInstance();
+	private static MainWindowController mainWindowController;
 
 	public MainWindowController() {
 		Utils.loadFXML(this);
@@ -65,15 +76,12 @@ public class MainWindowController extends AnchorPane {
 		contentAnchorPane.getChildren().add(listPostsController);
 
 
+		//START UP
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
-				try {
-					Thread.sleep(5000);
-					listPostsController.getFrontPage(SubredditSort.BEST, TimePeriod.ALL, false);
-				} catch (InterruptedException ie) {
-					ie.printStackTrace();
-				}
+				addSubscriptions();
+				listPostsController.getFrontPage(SubredditSort.BEST, TimePeriod.ALL, false);
 			}
 		}).start();
 
@@ -96,6 +104,7 @@ public class MainWindowController extends AnchorPane {
 
 		//Create Hamburger
 		drawer.setSidePane(drawerContent);
+		drawerScrollPane.setFitToWidth(true);
 
 		//Decline click evenets when closed
 		drawer.setOnDrawerClosing(new EventHandler<JFXDrawerEvent>() {
@@ -229,8 +238,51 @@ public class MainWindowController extends AnchorPane {
 		mainAnchorPane.setOnMouseClicked(Utils.requestFocusOnClick());
 	}
 
+	//Add subscriptions to drawer
+	private void addSubscriptions() {
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				List<Subreddit> subredditList = rc.getSubscriptions();
+
+				for(Subreddit subreddit : subredditList) {
+					Button btn = new Button();
+					btn.setText("r/"+subreddit.getName());
+					btn.prefWidthProperty().bind(drawerSubs.widthProperty());
+					btn.setAlignment(Pos.CENTER_LEFT);
+					//btn.setOnMouseClicked(openSubredditEvent(subreddit.getName()));
+					btn.setId("subsBtn");
+
+					Platform.runLater(new Runnable() {
+						@Override
+						public void run() {
+							drawerSubs.getChildren().add(btn);
+							drawerSubs.setSpacing(3);
+							drawerSubs.setPadding(new Insets(0, 0, 0, 11));
+						}
+					});
+				}
+			}
+		}).start();
+
+		smoothScrolling(drawerScrollPane);
+	}
 
 
+	public AnchorPane getContentAnchorPane() {
+		return contentAnchorPane;
+	}
+
+	public static MainWindowController getInstance() {
+		if (mainWindowController == null)
+			mainWindowController = new MainWindowController();
+		return mainWindowController;
+	}
+
+	public static MainWindowController createNewInstance() {
+		mainWindowController = new MainWindowController();
+		return mainWindowController;
+	}
 
 
 }

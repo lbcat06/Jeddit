@@ -66,9 +66,9 @@ public class ExpandedCardController extends AnchorPane {
 	public void initialize() {
 		score.setText(Utils.formatInt(submission.getScore()));
 		commentCountBtn.setText(Utils.formatInt(submission.getCommentCount()));
-		//thumbnail.setImage(new Image(submission.getThumbnail()));
 
-		//title
+		getStylesheets().add("com/lb/jeddit/css/ExpandedCard.css");
+
 		DynamicTextArea title = new DynamicTextArea();
 		title.setText(submission.getTitle());
 		title.getStyleClass().add("dynamicTextArea");
@@ -120,9 +120,10 @@ public class ExpandedCardController extends AnchorPane {
 			}
 			if (submission.getGildings().getSilvers() > 0) {
 				ImageView imageView = new ImageView(new Image("com/lb/jeddit/images/silver.png"));
-				imageView.setFitHeight(21);
+				imageView.setFitHeight(15);
 				imageView.setPreserveRatio(true);
 				Label lbl = new Label(submission.getGildings().getGolds() + "");
+				lbl.getStyleClass().add("gilding");
 				lbl.setMinWidth(USE_COMPUTED_SIZE);
 				lbl.setMaxWidth(USE_COMPUTED_SIZE);
 				lbl.setPrefWidth(USE_COMPUTED_SIZE);
@@ -147,17 +148,48 @@ public class ExpandedCardController extends AnchorPane {
 				@Override
 				public void handle(MouseEvent mouseEvent) {
 					//Add image of original size to screen
-					ImageView imageView = new ImageView(image);
-					imageView.setPreserveRatio(true);
-					imageView.setCache(true);
-					imageView.setCacheHint(CacheHint.QUALITY);
+//					ImageView imageView = new ImageView(image);
+//					imageView.setPreserveRatio(true);
+//					imageView.setCache(true);
+//					imageView.setCacheHint(CacheHint.QUALITY);
+//
+//					StackPane stackPane = new StackPane();
+//					stackPane.getChildren().add(imageView);
+//					stackPane.setAlignment(Pos.CENTER);
+//					stackPane.setStyle("-fx-background-color: blue");
+//
+//					ScrollPane scrollPane = new ScrollPane();
+//					scrollPane.setContent(stackPane);
+//					scrollPane.setFitToWidth(true);
+//					scrollPane.setId("imageOpenScrollPane");
+//					scrollPane.setCenterShape(true);
+//
+//
+//
+//					scrollPane.prefHeightProperty().bind(window.heightProperty());
+//					scrollPane.prefWidthProperty().bind(window.widthProperty());
+//
+//					scrollPane.widthProperty().addListener(new ChangeListener<Number>() {
+//						@Override
+//						public void changed(ObservableValue<? extends Number> observableValue, Number number, Number t1) {
+//							if(image.getWidth()>window.getWidth()) {
+//								imageView.fitWidthProperty().bind(window.widthProperty().multiply(0.7));
+//							} else {
+//								imageView.fitWidthProperty().unbind();
+//							}
+//							if(image.getHeight()<window.getHeight()-100) {
+//								stackPane.prefHeightProperty().bind(scrollPane.heightProperty().multiply(0.85));
+//							}
+//						}
+//					});
+//
+//					MainWindowController.getInstance().getContentAnchorPane().getChildren().add(scrollPane);
 
-					StackPane stackPane = new StackPane();
-					stackPane.setStyle("-fx-background-color: red;");
-					stackPane.prefHeightProperty().bind(window.heightProperty());
-					stackPane.prefWidthProperty().bind(window.widthProperty());
-					stackPane.getChildren().add(imageView);
-					vBox.getChildren().add(stackPane);
+					OpenImageController openImageController = new OpenImageController(image);
+					openImageController.prefHeightProperty().bind(window.heightProperty());
+					openImageController.prefWidthProperty().bind(window.widthProperty());
+					MainWindowController.getInstance().getContentAnchorPane().getChildren().add(openImageController);
+
 				}
 			});
 
