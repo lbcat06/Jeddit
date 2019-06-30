@@ -148,43 +148,6 @@ public class ExpandedCardController extends AnchorPane {
 				@Override
 				public void handle(MouseEvent mouseEvent) {
 					//Add image of original size to screen
-//					ImageView imageView = new ImageView(image);
-//					imageView.setPreserveRatio(true);
-//					imageView.setCache(true);
-//					imageView.setCacheHint(CacheHint.QUALITY);
-//
-//					StackPane stackPane = new StackPane();
-//					stackPane.getChildren().add(imageView);
-//					stackPane.setAlignment(Pos.CENTER);
-//					stackPane.setStyle("-fx-background-color: blue");
-//
-//					ScrollPane scrollPane = new ScrollPane();
-//					scrollPane.setContent(stackPane);
-//					scrollPane.setFitToWidth(true);
-//					scrollPane.setId("imageOpenScrollPane");
-//					scrollPane.setCenterShape(true);
-//
-//
-//
-//					scrollPane.prefHeightProperty().bind(window.heightProperty());
-//					scrollPane.prefWidthProperty().bind(window.widthProperty());
-//
-//					scrollPane.widthProperty().addListener(new ChangeListener<Number>() {
-//						@Override
-//						public void changed(ObservableValue<? extends Number> observableValue, Number number, Number t1) {
-//							if(image.getWidth()>window.getWidth()) {
-//								imageView.fitWidthProperty().bind(window.widthProperty().multiply(0.7));
-//							} else {
-//								imageView.fitWidthProperty().unbind();
-//							}
-//							if(image.getHeight()<window.getHeight()-100) {
-//								stackPane.prefHeightProperty().bind(scrollPane.heightProperty().multiply(0.85));
-//							}
-//						}
-//					});
-//
-//					MainWindowController.getInstance().getContentAnchorPane().getChildren().add(scrollPane);
-
 					OpenImageController openImageController = new OpenImageController(image);
 					openImageController.prefHeightProperty().bind(window.heightProperty());
 					openImageController.prefWidthProperty().bind(window.widthProperty());
@@ -204,11 +167,24 @@ public class ExpandedCardController extends AnchorPane {
 				imageView.fitWidthProperty().bind(window.heightProperty().multiply(0.6));
 			}
 
+			setOnMouseClicked(new EventHandler<MouseEvent>() {
+				@Override
+				public void handle(MouseEvent mouseEvent) {
+					openPost();
+				}
+			});
+
 			vBox.setAlignment(Pos.CENTER);
 			vBox.setSpacing(10);
 			vBox.getChildren().add(imageView);
 		}
+	}
 
+	private void openPost() {
+		OpenPostController openPostController = new OpenPostController(submission, ExpandedCardController.this);
+		openPostController.prefHeightProperty().bind(MainWindowController.getInstance().getContentAnchorPane().heightProperty());
+		openPostController.prefWidthProperty().bind(MainWindowController.getInstance().getContentAnchorPane().widthProperty());
+		MainWindowController.getInstance().getContentAnchorPane().getChildren().add(openPostController);
 	}
 
 }

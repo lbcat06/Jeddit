@@ -80,6 +80,7 @@ public class DynamicTextArea extends TextArea {
 
 	public void setComputeHeight(boolean computeHeight) {
 		this.computeHeight = computeHeight;
+		count = 0;
 		if(computeHeight) {
 			widthProperty().addListener(new ChangeListener<Number>() {
 				@Override
@@ -91,6 +92,7 @@ public class DynamicTextArea extends TextArea {
 	}
 	public void setComputeWidth(boolean computeWidth) {
 		this.computeWidth = computeWidth;
+		count = 0;
 		if(computeWidth) {
 			heightProperty().addListener(new ChangeListener<Number>() {
 				@Override
