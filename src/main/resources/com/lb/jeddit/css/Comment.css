@@ -23,17 +23,14 @@
 .dynamicTextArea {
     -fx-font-size: 14px;
     -fx-background-color: transparent;
-    -fx-cursor: hand;
 }
 
 .dynamicTextArea .content {
     -fx-background-color: transparent;
-    -fx-cursor: hand;
 }
 
 .dynamicTextArea .viewport {
     -fx-background-color: transparent;
-    -fx-cursor: hand;
 }
 
 .label {

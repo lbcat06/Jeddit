@@ -63,14 +63,11 @@ public class ListPostsController extends ScrollPane {
 		try {
 
 			for(Submission submission : submissionList) {
-				ExpandedCardController expandedCardController = new ExpandedCardController(submission);
+				Platform.runLater(() -> {
+					ExpandedCardController expandedCardController = new ExpandedCardController(submission);
 				//expandedCardController.setOnMouseClicked(openPost(submission));
 
-				Platform.runLater(new Runnable() {
-					@Override
-					public void run() {
-						vBox.getChildren().add(expandedCardController);
-					}
+					vBox.getChildren().add(expandedCardController);
 				});
 
 			}

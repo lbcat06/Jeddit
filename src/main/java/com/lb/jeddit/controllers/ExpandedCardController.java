@@ -83,7 +83,7 @@ public class ExpandedCardController extends VBox {
 		subreddit.setComputeWidth(true);
 
 		DynamicTextArea authorUploaded = new DynamicTextArea();
-		authorUploaded.setText(Utils.calculateDate(submission));
+		authorUploaded.setText("Posted by u/" + submission.getAuthor() + Utils.calculateDate(submission.getCreated()));
 		authorUploaded.getStyleClass().add("dynamicTextArea");
 		authorUploaded.setComputeWidth(true);
 
@@ -152,7 +152,6 @@ public class ExpandedCardController extends VBox {
 					openImageController.prefHeightProperty().bind(window.heightProperty());
 					openImageController.prefWidthProperty().bind(window.widthProperty());
 					MainWindowController.getInstance().getContentAnchorPane().getChildren().add(openImageController);
-
 				}
 			});
 
@@ -166,6 +165,7 @@ public class ExpandedCardController extends VBox {
 			} else {
 				imageView.fitWidthProperty().bind(window.heightProperty().multiply(0.6));
 			}
+
 
 			setOnMouseClicked(new EventHandler<MouseEvent>() {
 				@Override
@@ -181,10 +181,28 @@ public class ExpandedCardController extends VBox {
 	}
 
 	private void openPost() {
-		OpenPostController openPostController = new OpenPostController(submission, ExpandedCardController.this);
+		OpenPostController openPostController = OpenPostController.createNewInstance(submission, ExpandedCardController.this);
 		openPostController.prefHeightProperty().bind(MainWindowController.getInstance().getContentAnchorPane().heightProperty());
 		openPostController.prefWidthProperty().bind(MainWindowController.getInstance().getContentAnchorPane().widthProperty());
 		MainWindowController.getInstance().getContentAnchorPane().getChildren().add(openPostController);
+	}
+
+	public void setOpenPostEvent(boolean bool) {
+		if(bool) {
+			setOnMouseClicked(new EventHandler<MouseEvent>() {
+				@Override
+				public void handle(MouseEvent mouseEvent) {
+					openPost();
+				}
+			});
+		} else {
+			setOnMouseClicked(new EventHandler<MouseEvent>() {
+				@Override
+				public void handle(MouseEvent mouseEvent) {
+					//DO NOTHING
+				}
+			});
+		}
 	}
 
 }

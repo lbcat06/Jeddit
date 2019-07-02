@@ -7,30 +7,34 @@ import javafx.scene.layout.VBox;
 import net.dean.jraw.models.Submission;
 import net.dean.jraw.tree.CommentNode;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class OpenPostController extends ScrollPane {
 
 	private Submission submission;
 	private ExpandedCardController expandedCardController;
 	private Client rc = Client.getInstance();
+	private List<CommentController> commentControllerList = new ArrayList<>();
 
-	public OpenPostController(Submission submission) {
+	private OpenPostController(Submission submission) {
 		this.submission = submission;
 		this.expandedCardController = new ExpandedCardController(submission);
 		initialize();
 	}
 
-	public OpenPostController(Submission submission, ExpandedCardController expandedCardController) {
+	private OpenPostController(Submission submission, ExpandedCardController expandedCardController) {
 		this.expandedCardController = expandedCardController;
 		this.submission = submission;
 		initialize();
 	}
 
 	private void initialize() {
+		expandedCardController.setOpenPostEvent(false);
 		getStylesheets().add("com/lb/jeddit/css/OpenPost.css");
 		setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
 		setFitToWidth(true);
 		setId("scrollPane");
-		//setFitToHeight(true);
 
 		VBox vBox = new VBox();
 		vBox.getChildren().add(expandedCardController);
@@ -48,14 +52,33 @@ public class OpenPostController extends ScrollPane {
 		//Load comments
 		for(CommentNode commentNode : rc.getSubmissionComments(submission.getId())) {
 			if(!(commentNode.getSubject().getBody()==null)) {
-				CommentController commentController = new CommentController(commentNode, OpenPostController.this);
-//			commentController.setId(commentNode.getId());
+				CommentController commentController = new CommentController(commentNode, commentControllerList.size());
 				commentsVbox.getChildren().add(commentController);
-//			commentControllerList.add(commentController);
+				commentControllerList.add(commentController);
 			}
 		}
 
 	}
 
+	public List<CommentController> getCommentControllerList() {
+		return commentControllerList;
+	}
+
+	private static OpenPostController openPostController;
+	public static OpenPostController getInstance() {
+		if (openPostController == null)
+			openPostController = new OpenPostController(null);
+		return openPostController;
+	}
+
+	public static OpenPostController createNewInstance(Submission submission) {
+		openPostController = new OpenPostController(submission);
+		return openPostController;
+	}
+
+	public static OpenPostController createNewInstance(Submission submission, ExpandedCardController expandedCardController) {
+		openPostController = new OpenPostController(submission, expandedCardController);
+		return openPostController;
+	}
 
 }

@@ -2,13 +2,19 @@ package com.lb.jeddit.controllers;
 
 import com.lb.jeddit.Utils;
 import com.lb.jeddit.models.DynamicTextArea;
+import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
 import net.dean.jraw.tree.CommentNode;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class CommentController extends HBox {
@@ -36,9 +42,12 @@ public class CommentController extends HBox {
 	/*************************************/
 
 	private CommentNode comment;
+	private List<String> childrenIds = new ArrayList<>();
+	private int index;
 
-	public CommentController(CommentNode comment, OpenPostController openPostController) {
+	public CommentController(CommentNode comment, int index) {
 		this.comment = comment;
+		this.index = index;
 		Utils.loadFXML(this);
 	}
 
@@ -53,9 +62,6 @@ public class CommentController extends HBox {
 		indent.setPrefWidth((depth * 15));
 
 		HBox userInfo = new HBox();
-//		userInfo.setPrefHeight(10);
-//		userInfo.setMaxHeight(10);
-//		userInfo.setMinHeight(10);
 
 		//Author
 		DynamicTextArea author = new DynamicTextArea();
@@ -84,7 +90,7 @@ public class CommentController extends HBox {
 
 		//Coloured Rectangle
 		rectangle.heightProperty().bind(heightProperty());
-//		rectangle.setOnMouseClicked(hideChildren());
+		rectangle.setOnMouseClicked(childrenEvent());
 		rectangle.setWidth(5);
 
 		for(double i=0; i<depth; i+=9) {
@@ -118,10 +124,12 @@ public class CommentController extends HBox {
 			}
 		}
 
-		int indexOfTools = commentUserInfo.getChildren().indexOf(tools);
-		commentUserInfo.getChildren().add(indexOfTools, comment);
-		int indexOfComment = commentUserInfo.getChildren().indexOf(comment);
-		commentUserInfo.getChildren().add(indexOfComment, userInfo);
+		Platform.runLater(() -> {
+			int indexOfTools = commentUserInfo.getChildren().indexOf(tools);
+			commentUserInfo.getChildren().add(indexOfTools, comment);
+			int indexOfComment = commentUserInfo.getChildren().indexOf(comment);
+			commentUserInfo.getChildren().add(indexOfComment, userInfo);
+		});
 
 		//Fit to size
 		userInfo.prefHeightProperty().bind(author.heightProperty());
@@ -129,17 +137,30 @@ public class CommentController extends HBox {
 		prefHeightProperty().bind(commentUserInfo.heightProperty());
 	}
 
-//	//Open post on click event
-//	private EventHandler<MouseEvent> hideChildren() {
-//		return new EventHandler<MouseEvent>() {
-//			@Override
-//			public void handle(MouseEvent mouseEvent) {
-//				if(openPostController.getCommentControlList().indexOf(lookup("#"+comment.getId()))+1<openPostController.getCommentControlList().size()) {
-//					openPostController.hideChildren(CommentController.this,
-//							openPostController.getCommentControlList().get((openPostController.getCommentControlList().indexOf(lookup("#" + comment.getId())) + 1)));
-//				}
-//			}
-//		};
-//	}
+	//Open post on click event
+	private EventHandler<MouseEvent> childrenEvent() {
+		return new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent mouseEvent) {
+				Platform.runLater(() -> {
+					collapseComment();
+					hideChildren(index + 1);
+				});
+			}
+		};
+	}
+
+	private void hideChildren(int currentIndex) {
+		CommentController child = OpenPostController.getInstance().getCommentControllerList().get(currentIndex);
+		if(child.comment.getDepth()>comment.getDepth()) {
+			((VBox)child.getParent()).getChildren().remove(child);
+			hideChildren(currentIndex+1);
+		}
+	}
+
+	private void collapseComment() {
+		commentUserInfo.getChildren().remove(1, commentUserInfo.getChildren().size());
+		setHeight(USE_COMPUTED_SIZE);
+	}
 
 }
