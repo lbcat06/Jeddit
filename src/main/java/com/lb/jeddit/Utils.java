@@ -18,6 +18,7 @@ import net.dean.jraw.models.Submission;
 import org.joda.time.*;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.Map;
 import java.util.NavigableMap;
 import java.util.TreeMap;
@@ -92,6 +93,54 @@ public class Utils {
 		}
 
 		return authorUploaded;
+	}
+
+	public static String calculateDate(Date createdUTC) {
+		DateTime currentTime = new DateTime(DateTimeZone.UTC);
+		DateTime postedTime = new DateTime(createdUTC);
+
+		//Show most appropriate time
+		String yearDiffP = String.valueOf(Years.yearsBetween(postedTime, currentTime));
+		String yearDiff = yearDiffP.substring(1, yearDiffP.length() - 1);
+		String uploadedDate = yearDiff + " years ago";
+
+		if (Integer.parseInt(yearDiff) == 0) {
+
+			String monthDiffP = String.valueOf(Months.monthsBetween(postedTime, currentTime));
+			String monthDiff = monthDiffP.substring(1, monthDiffP.length() - 1);
+			uploadedDate = monthDiff + " months ago";
+
+			if (Integer.parseInt(monthDiff) == 0) {
+
+				String dayDiffPT = String.valueOf(Days.daysBetween(postedTime, currentTime));
+				String dayDiff = dayDiffPT.substring(1, dayDiffPT.length() - 1);
+				uploadedDate = dayDiff + " days ago";
+
+				if (Integer.parseInt(dayDiff) == 0) {
+
+					String hourDiffPT = String.valueOf(Hours.hoursBetween(postedTime, currentTime));
+					String hourDiff = hourDiffPT.substring(2, hourDiffPT.length() - 1);
+					uploadedDate = hourDiff + " hours ago";
+
+					if (Integer.parseInt(hourDiff) == 0) {
+
+						String minDiffPT = String.valueOf(Minutes.minutesBetween(postedTime, currentTime));
+						String minDiff = minDiffPT.substring(2, minDiffPT.length() - 1);
+						uploadedDate = minDiff + " minutes ago";
+
+						if (Integer.parseInt(minDiff) == 0) {
+
+							String secDiffPT = String.valueOf(Seconds.secondsBetween(postedTime, currentTime));
+							String secDiff = secDiffPT.substring(2, secDiffPT.length() - 1);
+							uploadedDate = secDiff + " seconds ago";
+
+						}
+					}
+				}
+			}
+		}
+
+		return uploadedDate;
 	}
 
 	public static EventHandler<MouseEvent> requestFocusOnClick() {

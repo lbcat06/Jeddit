@@ -48,7 +48,7 @@ public class Client {
 	private List<SubmissionReference> submissionReferenceList = new ArrayList<>();
 
 	//Fetch submission
-	public SubmissionReference fetchSubmissionReference(String id) {
+	private SubmissionReference fetchSubmissionReference(String id) {
 		SubmissionReference submissionReference = redditClient.submission(id);
 		submissionReferenceList.add(submissionReference);
 		return submissionReference;
@@ -66,20 +66,16 @@ public class Client {
 		return fetchSubmissionReference(id);
 	}
 
-	public void getSubmissionComments(String id) {
-		CommentNode commentNode = getSubmissionReference(id).comments();
+	public List<CommentNode> getSubmissionComments(String id) {
+		Iterator<CommentNode<PublicContribution<?>>> commentIterator = getSubmissionReference(id).comments().walkTree().iterator();
 
-		System.out.println(commentNode.getSubject().getBody());
+		List<CommentNode> commentNodeList = new ArrayList<>();
 
-//				//Iterate through comments
-//		Iterator<CommentNode<PublicContribution<?>>> commentIterator = root.walkTree().iterator();
-//		while (commentIterator.hasNext() ) {
-//			CommentNode commentNode = commentIterator.next();
-//			commentNodesList.add(commentNode);
-//			commentIterator.remove();
-//		}
-//
-//		return commentNodesList;
+		while(commentIterator.hasNext()) {
+			commentNodeList.add(commentIterator.next());
+		}
+
+		return commentNodeList;
 	}
 
 

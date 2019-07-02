@@ -19,12 +19,12 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Window;
 import net.dean.jraw.models.Submission;
 
-public class ExpandedCardController extends AnchorPane {
+public class ExpandedCardController extends VBox {
 
 	/************ FXML IMPORT ************/
 
 	@FXML
-	private AnchorPane mainAnchorPane;
+	private VBox mainAnchorPane;
 
 	@FXML
 	private AnchorPane infoAnchorPane;

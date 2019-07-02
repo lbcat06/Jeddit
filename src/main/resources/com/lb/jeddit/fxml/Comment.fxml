@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.Rectangle?>
+<fx:root fx:id="root" minHeight="-Infinity" prefWidth="630.0" styleClass="root" stylesheets="@../css/Comment.css" type="javafx.scene.layout.HBox" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"><children>
+      <Region fx:id="indent" prefWidth="17.0" />
+      <Rectangle fx:id="rectangle" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="24.0" stroke="BLACK" strokeType="INSIDE" width="11.0" />
+      <VBox fx:id="commentUserInfo" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="24.0" prefWidth="600.0">
+         <children>
+            <HBox fx:id="tools" prefHeight="23.0" prefWidth="546.0">
+               <children>
+                  <Region prefHeight="24.0" prefWidth="13.0" />
+                  <Label fx:id="replyBtn" prefHeight="20.0" text="Reply" />
+                  <Region prefHeight="24.0" prefWidth="9.0" />
+                  <Label fx:id="giveAwardBtn" prefHeight="20.0" text="Give Award" />
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</fx:root>

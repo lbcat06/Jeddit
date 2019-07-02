@@ -2,8 +2,8 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<fx:root fx:id="mainAnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="815.0" styleClass="root" stylesheets="@../css/ExpandedCard.css" type="javafx.scene.layout.AnchorPane" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"><children>
-      <AnchorPane fx:id="infoAnchorPane" layoutX="-2.0" layoutY="3.0" minHeight="-Infinity" minWidth="-Infinity" prefWidth="815.0" styleClass="transparent" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+<fx:root fx:id="mainAnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="815.0" styleClass="root" stylesheets="@../css/ExpandedCard.css" type="javafx.scene.layout.VBox" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"><children>
+      <AnchorPane fx:id="infoAnchorPane" minHeight="-Infinity" minWidth="-Infinity" prefWidth="815.0" styleClass="transparent">
          <children>
             <VBox fx:id="vBox" prefWidth="815.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="10.0">
                <children>
@@ -12,7 +12,7 @@
             </VBox>
          </children>
       </AnchorPane>
-      <AnchorPane maxHeight="-Infinity" prefHeight="38.0" prefWidth="815.0" styleClass="transparent" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+      <AnchorPane fx:id="otherAnchorPane" maxHeight="-Infinity" prefHeight="38.0" prefWidth="815.0" styleClass="transparent">
          <children>
             <Label fx:id="upVoteBtn" layoutX="6.0" layoutY="48.0" prefHeight="30.0" prefWidth="30.0" styleClass="toolsBtn" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="10.0" />
             <Label fx:id="downVoteBtn" prefHeight="30.0" prefWidth="30.0" styleClass="toolsBtn" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="40.0" />

@@ -1,0 +1,47 @@
+* {
+    -fx-primary: #1e1e1e;
+    -fx-secondary: #191919;
+    -fx-tertiary: #242424;
+
+    -fx-accent-1: #54d4e5;
+    -fx-accent-2: #ff6347;
+    -fx-accent-1-hover: #000000;
+    -fx-accent-2-hover: #fc7962;
+
+    -fx-text-primary: #eeeef2;
+    -fx-text-secondary: #333333;
+
+    -fx-font-family: monospace;
+    -fx-text-fill: -fx-text-primary;
+}
+
+
+#root {
+    -fx-background-color: transparent;
+}
+
+.dynamicTextArea {
+    -fx-font-size: 14px;
+    -fx-background-color: transparent;
+    -fx-cursor: hand;
+}
+
+.dynamicTextArea .content {
+    -fx-background-color: transparent;
+    -fx-cursor: hand;
+}
+
+.dynamicTextArea .viewport {
+    -fx-background-color: transparent;
+    -fx-cursor: hand;
+}
+
+.label {
+    -fx-alignment: center;
+    -fx-padding: 3 7 3 7;
+    -fx-font-size: 13px;
+}
+
+.label:hover {
+    -fx-background-color: -fx-secondary;
+}
