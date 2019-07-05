@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<fx:root prefHeight="220.0" prefWidth="900.0" stylesheets="@../css/OpenSubreddit.css" type="javafx.scene.layout.VBox" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <AnchorPane fx:id="header" prefHeight="180.0" prefWidth="900.0">
+         <children>
+            <HBox layoutX="76.0" layoutY="52.0" prefHeight="50.0" prefWidth="200.0" AnchorPane.bottomAnchor="65.0" AnchorPane.leftAnchor="76.0" AnchorPane.topAnchor="65.0">
+               <children>
+                  <ImageView fx:id="subredditIcon" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" />
+                  <Label fx:id="subredditName" prefHeight="50.0" prefWidth="150.0" text="Label" />
+               </children>
+            </HBox>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="toolbar" prefHeight="40.0" prefWidth="900.0">
+         <children>
+            <MenuButton fx:id="sortMenuButton" mnemonicParsing="false" styleClass="sortMenuButton" text="Sort" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="0.0" />
+         </children></AnchorPane>
+   </children>
+</fx:root>

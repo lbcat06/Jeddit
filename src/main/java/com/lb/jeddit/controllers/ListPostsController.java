@@ -1,5 +1,6 @@
 package com.lb.jeddit.controllers;
 
+import com.lb.jeddit.Events;
 import com.lb.jeddit.models.Client;
 import javafx.application.Platform;
 import javafx.geometry.Pos;
@@ -8,6 +9,7 @@ import javafx.scene.layout.VBox;
 import net.dean.jraw.models.Submission;
 import net.dean.jraw.models.SubredditSort;
 import net.dean.jraw.models.TimePeriod;
+import net.dean.jraw.references.SubredditReference;
 
 import java.util.List;
 
@@ -59,17 +61,29 @@ public class ListPostsController extends ScrollPane {
 		}).start();
 	}
 
+	public void getSubreddit(String subreddit, SubredditSort subredditSort, TimePeriod timePeriod) {
+		clearPosts();
+
+		SubredditReference subredditReference = rc.getSubredditReference(subreddit);
+
+		Events.openSubreddit(subredditReference);
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				for(int i=1; i<DEFAULT_ITERATION_COUNT; i++) {
+					createSubmissionCard(rc.getSubredditSubmissions(subredditReference, i, subredditSort, timePeriod));
+				}
+			}
+		}).start();
+	}
+
 	private void createSubmissionCard(List<Submission> submissionList) {
 		try {
-
 			for(Submission submission : submissionList) {
 				Platform.runLater(() -> {
 					ExpandedCardController expandedCardController = new ExpandedCardController(submission);
-				//expandedCardController.setOnMouseClicked(openPost(submission));
-
 					vBox.getChildren().add(expandedCardController);
 				});
-
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -80,17 +94,15 @@ public class ListPostsController extends ScrollPane {
 
 	//Clear VBox containing posts
 	public void clearPosts() {
-		Platform.runLater(new Runnable() {
-			@Override
-			public void run() {
-				vBox.getChildren().clear();
-			}
-		});
+		vBox.getChildren().clear();
 	}
 
 	/** EVENTS */
 
 	/** GETTERS & SETTERS */
+	public VBox getContentVBox() {
+		return vBox;
+	}
 
 	public static ListPostsController getInstance() {
 		if (listPostsController == null)

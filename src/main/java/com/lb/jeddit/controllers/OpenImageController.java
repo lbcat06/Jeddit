@@ -1,5 +1,6 @@
 package com.lb.jeddit.controllers;
 
+import com.lb.jeddit.Events;
 import com.lb.jeddit.Utils;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -11,7 +12,6 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 
 public class OpenImageController extends ScrollPane {
@@ -28,10 +28,9 @@ public class OpenImageController extends ScrollPane {
 	private Image image;
 	private int count = 0;
 
-	public OpenImageController(Image image) {
+	private OpenImageController(Image image) {
 		this.image = image;
 		Utils.loadFXML(this);
-
 		setFitToWidth(true);
 
 		imageView.setImage(image);
@@ -60,7 +59,8 @@ public class OpenImageController extends ScrollPane {
 		closeBtn.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent mouseEvent) {
-				((Pane)getParent()).getChildren().remove(OpenImageController.this);
+				//((Pane)getParent()).getChildren().remove(OpenImageController.this);
+				Events.closeImage();
 			}
 		});
 	}
@@ -82,5 +82,19 @@ public class OpenImageController extends ScrollPane {
 			count++;
 		}
 	}
+
+
+	private static OpenImageController openImageController;
+	public static OpenImageController getInstance() {
+		if (openImageController == null)
+			openImageController = new OpenImageController(null);
+		return openImageController;
+	}
+
+	public static OpenImageController createNewInstance(Image image) {
+		openImageController = new OpenImageController(image);
+		return openImageController;
+	}
+
 
 }

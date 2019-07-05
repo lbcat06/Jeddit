@@ -46,54 +46,6 @@ public class Utils {
 		return hasDecimal ? (truncated / 10d) + suffix : (truncated / 10) + suffix;
 	}
 
-//	public static String calculateDate(Submission submission) {
-//		DateTime currentTime = new DateTime(DateTimeZone.UTC);
-//		DateTime postedTime = new DateTime(submission.getCreated());
-//
-//		//Show most appropriate time
-//		String yearDiffP = String.valueOf(Years.yearsBetween(postedTime, currentTime));
-//		String yearDiff = yearDiffP.substring(1, yearDiffP.length() - 1);
-//		String authorUploaded = "Posted by " + submission.getAuthor() + " " + yearDiff + " years ago";
-//
-//		if (Integer.parseInt(yearDiff) == 0) {
-//
-//			String monthDiffP = String.valueOf(Months.monthsBetween(postedTime, currentTime));
-//			String monthDiff = monthDiffP.substring(1, monthDiffP.length() - 1);
-//			authorUploaded = "Posted by " + submission.getAuthor() + " " + monthDiff + " months ago";
-//
-//			if (Integer.parseInt(monthDiff) == 0) {
-//
-//				String dayDiffPT = String.valueOf(Days.daysBetween(postedTime, currentTime));
-//				String dayDiff = dayDiffPT.substring(1, dayDiffPT.length() - 1);
-//				authorUploaded = "Posted by " + submission.getAuthor() + " " + dayDiff + " days ago";
-//
-//				if (Integer.parseInt(dayDiff) == 0) {
-//
-//					String hourDiffPT = String.valueOf(Hours.hoursBetween(postedTime, currentTime));
-//					String hourDiff = hourDiffPT.substring(2, hourDiffPT.length() - 1);
-//					authorUploaded = "Posted by " + submission.getAuthor() + " " + hourDiff + " hours ago";
-//
-//					if (Integer.parseInt(hourDiff) == 0) {
-//
-//						String minDiffPT = String.valueOf(Minutes.minutesBetween(postedTime, currentTime));
-//						String minDiff = minDiffPT.substring(2, minDiffPT.length() - 1);
-//						authorUploaded = "Posted by " + submission.getAuthor() + " " + minDiff + " minutes ago";
-//
-//						if (Integer.parseInt(minDiff) == 0) {
-//
-//							String secDiffPT = String.valueOf(Seconds.secondsBetween(postedTime, currentTime));
-//							String secDiff = secDiffPT.substring(2, secDiffPT.length() - 1);
-//							authorUploaded = "Posted by " + submission.getAuthor() + " " + secDiff + " seconds ago";
-//
-//						}
-//					}
-//				}
-//			}
-//		}
-//
-//		return authorUploaded;
-//	}
-
 	public static String calculateDate(Date createdUTC) {
 		DateTime currentTime = new DateTime(DateTimeZone.UTC);
 		DateTime postedTime = new DateTime(createdUTC);
@@ -179,6 +131,14 @@ public class Utils {
 		imageView.setClip(clip);
 
 		return imageView;
+	}
+
+	public static String getForeGroundColorBasedOnBGBrightness(Color c) {
+		if ((int) Math.sqrt(c.getRed() * c.getRed() * .241 + c.getGreen() * c.getGreen() * .691 + c.getBlue() * c.getBlue() * .068) > 130) {
+			return "#111111";
+		} else {
+			return "#eeeef2";
+		}
 	}
 
 	public static void loadFXML(Object classObj) {

@@ -250,7 +250,7 @@ public class MainWindowController extends AnchorPane {
 					btn.setText("r/"+subreddit.getName());
 					btn.prefWidthProperty().bind(drawerSubs.widthProperty());
 					btn.setAlignment(Pos.CENTER_LEFT);
-					//btn.setOnMouseClicked(openSubredditEvent(subreddit.getName()));
+					btn.setOnMouseClicked(e -> listPostsController.getSubreddit(subreddit.getName(), SubredditSort.HOT, TimePeriod.ALL));
 					btn.setId("subsBtn");
 
 					Platform.runLater(new Runnable() {

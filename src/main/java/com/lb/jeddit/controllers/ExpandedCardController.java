@@ -1,5 +1,6 @@
 package com.lb.jeddit.controllers;
 
+import com.lb.jeddit.Events;
 import com.lb.jeddit.Utils;
 import com.lb.jeddit.models.Client;
 import com.lb.jeddit.models.DynamicTextArea;
@@ -148,10 +149,11 @@ public class ExpandedCardController extends VBox {
 				@Override
 				public void handle(MouseEvent mouseEvent) {
 					//Add image of original size to screen
-					OpenImageController openImageController = new OpenImageController(image);
-					openImageController.prefHeightProperty().bind(window.heightProperty());
-					openImageController.prefWidthProperty().bind(window.widthProperty());
-					MainWindowController.getInstance().getContentAnchorPane().getChildren().add(openImageController);
+					Events.openImage(image);
+//					OpenImageController openImageController = new OpenImageController(image);
+//					openImageController.prefHeightProperty().bind(window.heightProperty());
+//					openImageController.prefWidthProperty().bind(window.widthProperty());
+//					MainWindowController.getInstance().getContentAnchorPane().getChildren().add(openImageController);
 				}
 			});
 
@@ -169,9 +171,7 @@ public class ExpandedCardController extends VBox {
 
 			setOnMouseClicked(new EventHandler<MouseEvent>() {
 				@Override
-				public void handle(MouseEvent mouseEvent) {
-					openPost();
-				}
+				public void handle(MouseEvent mouseEvent) { Events.openPost(submission, ExpandedCardController.this); }
 			});
 
 			vBox.setAlignment(Pos.CENTER);
@@ -180,19 +180,19 @@ public class ExpandedCardController extends VBox {
 		}
 	}
 
-	private void openPost() {
-		OpenPostController openPostController = OpenPostController.createNewInstance(submission, ExpandedCardController.this);
-		openPostController.prefHeightProperty().bind(MainWindowController.getInstance().getContentAnchorPane().heightProperty());
-		openPostController.prefWidthProperty().bind(MainWindowController.getInstance().getContentAnchorPane().widthProperty());
-		MainWindowController.getInstance().getContentAnchorPane().getChildren().add(openPostController);
-	}
+//	private void openPost() {
+//		OpenPostController openPostController = OpenPostController.createNewInstance(submission, ExpandedCardController.this);
+//		openPostController.prefHeightProperty().bind(MainWindowController.getInstance().getContentAnchorPane().heightProperty());
+//		openPostController.prefWidthProperty().bind(MainWindowController.getInstance().getContentAnchorPane().widthProperty());
+//		MainWindowController.getInstance().getContentAnchorPane().getChildren().add(openPostController);
+//	}
 
 	public void setOpenPostEvent(boolean bool) {
 		if(bool) {
 			setOnMouseClicked(new EventHandler<MouseEvent>() {
 				@Override
 				public void handle(MouseEvent mouseEvent) {
-					openPost();
+					Events.openPost(submission, ExpandedCardController.this);
 				}
 			});
 		} else {

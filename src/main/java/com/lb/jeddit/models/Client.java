@@ -5,6 +5,7 @@ import net.dean.jraw.models.*;
 import net.dean.jraw.pagination.BarebonesPaginator;
 import net.dean.jraw.pagination.Paginator;
 import net.dean.jraw.references.SubmissionReference;
+import net.dean.jraw.references.SubredditReference;
 import net.dean.jraw.tree.CommentNode;
 
 import java.util.ArrayList;
@@ -43,7 +44,6 @@ public class Client {
 
 	/** GET POSTS */
 	private Iterator<Listing<Submission>> submissionIterator;
-
 
 	private List<SubmissionReference> submissionReferenceList = new ArrayList<>();
 
@@ -91,6 +91,38 @@ public class Client {
 		}
 
 		return submissionIterator.next();
+	}
+
+	public Listing<Submission> getSubredditSubmissions(String subreddit, int page, SubredditSort subredditSort, TimePeriod timePeriod) {
+		if(page==1) {
+			submissionIterator = redditClient.subreddit(subreddit)
+					.posts()
+					.limit(10)
+					.sorting(subredditSort)
+					.timePeriod(timePeriod)
+					.build()
+					.iterator();
+		}
+
+		return submissionIterator.next();
+	}
+
+	public Listing<Submission> getSubredditSubmissions(SubredditReference subredditReference, int page, SubredditSort subredditSort, TimePeriod timePeriod) {
+		if(page==1) {
+			submissionIterator = subredditReference
+					.posts()
+					.limit(10)
+					.sorting(subredditSort)
+					.timePeriod(timePeriod)
+					.build()
+					.iterator();
+		}
+
+		return submissionIterator.next();
+	}
+
+	public SubredditReference getSubredditReference(String subreddit) {
+		return redditClient.subreddit(subreddit);
 	}
 
 	//Get user subscriptions
