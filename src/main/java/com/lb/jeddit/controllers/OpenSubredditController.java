@@ -11,6 +11,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import net.dean.jraw.models.Subreddit;
+import net.dean.jraw.models.SubredditSort;
+import net.dean.jraw.models.TimePeriod;
 import net.dean.jraw.references.SubredditReference;
 
 public class OpenSubredditController extends VBox {
@@ -87,13 +89,21 @@ public class OpenSubredditController extends VBox {
 			VBox vBox = ListPostsController.getInstance().getContentVBox();
 			vBox.getChildren().remove(1, vBox.getChildren().size());
 
-			DynamicTextArea about = new DynamicTextArea();
-			about.setText(subreddit.getSidebar());
-			about.getStyleClass().add("dynamicTextArea");
-			about.setComputeHeight(true);
-			about.maxWidthProperty().bind(vBox.widthProperty().multiply(0.8));
+			if(aboutBtn.getText().equals("ABOUT")) {
+				//LOAD ABOUT PAGE
+				DynamicTextArea about = new DynamicTextArea();
+				about.setText(subreddit.getSidebar());
+				about.getStyleClass().add("dynamicTextArea");
+				about.setComputeHeight(true);
+				about.maxWidthProperty().bind(vBox.widthProperty().multiply(0.8));
 
-			vBox.getChildren().add(about);
+				vBox.getChildren().add(about);
+				aboutBtn.setText("SUBMISSIONS");
+			} else {
+				//LOAD SUBMISSIONS
+				ListPostsController.getInstance().getSubreddit(subreddit.getName(), SubredditSort.HOT, TimePeriod.ALL);
+				aboutBtn.setText("ABOUT");
+			}
 		});
 	}
 
