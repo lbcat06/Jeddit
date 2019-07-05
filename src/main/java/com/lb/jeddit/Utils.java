@@ -135,9 +135,9 @@ public class Utils {
 
 	public static String getForeGroundColorBasedOnBGBrightness(Color c) {
 		if ((int) Math.sqrt(c.getRed() * c.getRed() * .241 + c.getGreen() * c.getGreen() * .691 + c.getBlue() * c.getBlue() * .068) > 130) {
-			return "#111111";
-		} else {
 			return "#eeeef2";
+		} else {
+			return "#111111";
 		}
 	}
 

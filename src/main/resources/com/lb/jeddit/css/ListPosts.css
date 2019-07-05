@@ -37,3 +37,17 @@
     -fx-background-color: transparent;
 }
 
+.dynamicTextArea {
+    -fx-font-family: monospace;
+    -fx-background-color: transparent;
+    -fx-font-size: 14px;
+}
+
+.dynamicTextArea .content {
+    -fx-background-color: transparent;
+}
+
+.dynamicTextArea .viewport {
+    -fx-background-color: transparent;
+}
+

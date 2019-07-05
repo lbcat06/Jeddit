@@ -1,6 +1,7 @@
 package com.lb.jeddit.controllers;
 
 import com.lb.jeddit.Utils;
+import com.lb.jeddit.models.DynamicTextArea;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
@@ -26,16 +27,25 @@ public class OpenSubredditController extends VBox {
 	@FXML
 	private AnchorPane toolbar;
 
+	@FXML
+	private Label subscribeBtn;
+
+	@FXML
+	private Label aboutBtn;
+
 	/**/
 
 	private Subreddit subreddit;
+	private SubredditReference subredditReference;
 
 	private OpenSubredditController(SubredditReference subredditReference) {
+		this.subredditReference = subredditReference;
 		subreddit = subredditReference.about();
 		Utils.loadFXML(this);
 	}
 
 	public void initialize() {
+		getStylesheets().add("com/lb/jeddit/css/OpenSubreddit.css");
 		subredditName.setText("r/"+subreddit.getName());
 
 		try {
@@ -58,7 +68,50 @@ public class OpenSubredditController extends VBox {
 			}
 		}
 
+		//Toolbar
+		if(subreddit.isUserSubscriber()) {
+			subscribeBtn.setText("UNSUBSCRIBE");
+			subscribeBtn.setOnMouseClicked(e -> {
+				subredditReference.unsubscribe();
+				updateSubscribeBtn();
+			});
+		} else {
+			subscribeBtn.setText("SUBSCRIBE");
+			subscribeBtn.setOnMouseClicked(e -> {
+				subredditReference.subscribe();
+				updateSubscribeBtn();
+			});
+		}
 
+		aboutBtn.setOnMouseClicked(e -> {
+			VBox vBox = ListPostsController.getInstance().getContentVBox();
+			vBox.getChildren().remove(1, vBox.getChildren().size());
+
+			DynamicTextArea about = new DynamicTextArea();
+			about.setText(subreddit.getSidebar());
+			about.getStyleClass().add("dynamicTextArea");
+			about.setComputeHeight(true);
+			about.maxWidthProperty().bind(vBox.widthProperty().multiply(0.8));
+
+			vBox.getChildren().add(about);
+		});
+	}
+
+	//isUserSubscriber boolean does not update, therefore must check using local boolean OR text of subscribeBtn node
+	private void updateSubscribeBtn() {
+		if(subscribeBtn.getText().equals("SUBSCRIBE")) {
+			subscribeBtn.setText("UNSUBSCRIBE");
+			subscribeBtn.setOnMouseClicked(e -> {
+				subredditReference.unsubscribe();
+				updateSubscribeBtn();
+			});
+		} else {
+			subscribeBtn.setText("SUBSCRIBE");
+			subscribeBtn.setOnMouseClicked(e -> {
+				subredditReference.subscribe();
+				updateSubscribeBtn();
+			});
+		}
 	}
 
 	private static OpenSubredditController openSubredditController;
