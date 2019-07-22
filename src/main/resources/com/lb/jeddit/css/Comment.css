@@ -40,5 +40,5 @@
 }
 
 .label:hover {
-    -fx-background-color: -fx-secondary;
+    -fx-background-color: -fx-tertiary;
 }
