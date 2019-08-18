@@ -5,6 +5,7 @@ import com.jfoenix.controls.JFXHamburger;
 import com.jfoenix.controls.events.JFXDrawerEvent;
 import com.lb.jeddit.Utils;
 import com.lb.jeddit.models.Client;
+import com.lb.jeddit.models.DynamicTextArea;
 import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -22,6 +23,8 @@ import net.dean.jraw.models.SubredditSort;
 import net.dean.jraw.models.TimePeriod;
 
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import static com.jfoenix.controls.JFXScrollPane.smoothScrolling;
 
@@ -70,6 +73,7 @@ public class MainWindowController extends AnchorPane {
 	}
 
 	public void initialize() {
+		getStylesheets().add("com/lb/jeddit/css/MainWindow.css");
 		//Search bar event on 'enter' key press
 //		searchTextField.setOnKeyPressed(searchOnEnterEvent(""));
 		//Start on listPostController
@@ -229,7 +233,6 @@ public class MainWindowController extends AnchorPane {
 		});
 
 
-
 		//Focused on background on startup
 		mainAnchorPane.requestFocus();
 		mainAnchorPane.setOnMouseClicked(Utils.requestFocusOnClick());
@@ -263,6 +266,30 @@ public class MainWindowController extends AnchorPane {
 		}).start();
 
 		smoothScrolling(drawerScrollPane);
+	}
+
+	public void toast(String toast) {
+		DynamicTextArea dynamicTextArea = new DynamicTextArea();
+
+		//ANCHOR TOAST TO BOTTOM RIGHT OF APPLICATION
+		mainWindowController.getChildren().add(dynamicTextArea);
+		mainWindowController.setRightAnchor(dynamicTextArea, 50.0);
+		mainWindowController.setBottomAnchor(dynamicTextArea, 50.0);
+
+		dynamicTextArea.setText(toast);
+		dynamicTextArea.setId("toast");
+		dynamicTextArea.setComputeHeight(true);
+
+		//REMOVE TOAST AFTER 10 SECONDS
+		Timer timer = new Timer();
+		timer.schedule(new TimerTask() {
+			@Override
+			public void run() {
+				Platform.runLater(() -> {
+					mainWindowController.getChildren().remove(dynamicTextArea);
+				});
+			}
+		}, 10*1000);
 	}
 
 

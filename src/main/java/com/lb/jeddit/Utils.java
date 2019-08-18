@@ -1,5 +1,6 @@
 package com.lb.jeddit;
 
+import com.lb.jeddit.controllers.MainWindowController;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -112,6 +113,10 @@ public class Utils {
 				});
 			}
 		};
+	}
+
+	public static void toast(String toast) {
+		MainWindowController.getInstance().toast(toast);
 	}
 
 	public static ImageView roundImageViewCorners(ImageView imageView) {

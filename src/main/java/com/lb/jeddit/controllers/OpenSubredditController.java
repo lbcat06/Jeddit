@@ -2,6 +2,8 @@ package com.lb.jeddit.controllers;
 
 import com.lb.jeddit.Utils;
 import com.lb.jeddit.models.DynamicTextArea;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
@@ -120,6 +122,7 @@ public class OpenSubredditController extends VBox {
 		risingSearch.setGraphic(risingSvg);
 		MenuItem risingMenuItem = new MenuItem();
 		risingMenuItem.setGraphic(risingSearch);
+		risingMenuItem.setOnAction(sortEvent(risingMenuItem));
 
 		Label topSearch = new Label(" Top");
 		SVGPath topSvg = new SVGPath();
@@ -128,6 +131,7 @@ public class OpenSubredditController extends VBox {
 		topSearch.setGraphic(topSvg);
 		MenuItem topMenuItem = new MenuItem();
 		topMenuItem.setGraphic(topSearch);
+		topMenuItem.setOnAction(sortEvent(topMenuItem));
 
 		Label controversialSearch = new Label(" Controversial");
 		SVGPath controversialSvg = new SVGPath();
@@ -136,6 +140,7 @@ public class OpenSubredditController extends VBox {
 		controversialSearch.setGraphic(controversialSvg);
 		MenuItem controversialMenuItem = new MenuItem();
 		controversialMenuItem.setGraphic(controversialSearch);
+		controversialMenuItem.setOnAction(sortEvent(controversialMenuItem));
 
 		Label hotSearch = new Label(" Hot");
 		SVGPath hotSvg = new SVGPath();
@@ -144,6 +149,8 @@ public class OpenSubredditController extends VBox {
 		hotSearch.setGraphic(hotSvg);
 		MenuItem hotMenuItem = new MenuItem();
 		hotMenuItem.setGraphic(hotSearch);
+		hotMenuItem.setOnAction(sortEvent(hotMenuItem));
+		currentSort = hotMenuItem;
 
 		Label newSearch = new Label(" New");
 		SVGPath newSvg = new SVGPath();
@@ -152,9 +159,25 @@ public class OpenSubredditController extends VBox {
 		newSearch.setGraphic(newSvg);
 		MenuItem newMenuItem = new MenuItem();
 		newMenuItem.setGraphic(newSearch);
+		newMenuItem.setOnAction(sortEvent(newMenuItem));
 
 		sortMenuButton.getItems().addAll(hotMenuItem, newMenuItem, controversialMenuItem, topMenuItem, risingMenuItem);
 	}
+
+	private EventHandler<ActionEvent> sortEvent(MenuItem menuItem) {
+		return new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent actionEvent) {
+				sortMenuButton.getItems().add(currentSort);
+				currentSort.setGraphic(sortMenuButton.getGraphic());
+				sortMenuButton.getItems().remove(menuItem);
+				sortMenuButton.setGraphic(menuItem.getGraphic());
+				currentSort = menuItem;
+			}
+		};
+	}
+
+	private MenuItem currentSort;
 
 	//isUserSubscriber boolean does not update, therefore must check using local boolean OR text of subscribeBtn node
 	private void updateSubscribeBtn() {

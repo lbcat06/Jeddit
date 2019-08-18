@@ -18,7 +18,10 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Window;
+import net.dean.jraw.ApiException;
 import net.dean.jraw.models.Submission;
+import net.dean.jraw.models.VoteDirection;
+import net.dean.jraw.references.SubmissionReference;
 
 public class ExpandedCardController extends VBox {
 
@@ -58,6 +61,7 @@ public class ExpandedCardController extends VBox {
 
 	private Client rc = Client.getInstance();
 	private Submission submission;
+	private SubmissionReference submissionReference;
 
 	public ExpandedCardController(Submission submission) {
 		this.submission = submission;
@@ -178,6 +182,19 @@ public class ExpandedCardController extends VBox {
 			vBox.setSpacing(10);
 			vBox.getChildren().add(imageView);
 		}
+
+		if(submission.getVote() == VoteDirection.UP) {
+			upVoteBtn.setGraphic(new ImageView(new Image("com/lb/jeddit/images/up-24-orange.png")));
+			upVoteBtn.setOnMouseClicked(cancelVote());
+			downVoteBtn.setOnMouseClicked(downVote());
+		} else if(submission.getVote() == VoteDirection.DOWN) {
+			downVoteBtn.setGraphic(new ImageView(new Image("com/lb/jeddit/images/down-24-blue.png")));
+			upVoteBtn.setOnMouseClicked(cancelVote());
+			downVoteBtn.setOnMouseClicked(downVote());
+		} else {
+			upVoteBtn.setOnMouseClicked(upVote());
+			downVoteBtn.setOnMouseClicked(downVote());
+		}
 	}
 
 //	private void openPost() {
@@ -186,6 +203,63 @@ public class ExpandedCardController extends VBox {
 //		openPostController.prefWidthProperty().bind(MainWindowController.getInstance().getContentAnchorPane().widthProperty());
 //		MainWindowController.getInstance().getContentAnchorPane().getChildren().add(openPostController);
 //	}
+
+	private EventHandler<MouseEvent> cancelVote() {
+		return new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent mouseEvent) {
+				try {
+					if(submissionReference==null) {
+						submissionReference = rc.getSubmissionReference(submission.getId());
+					}
+					upVoteBtn.setGraphic(new ImageView(new Image("com/lb/jeddit/images/up-24-grey.png")));
+					downVoteBtn.setGraphic(new ImageView(new Image("com/lb/jeddit/images/down-24-grey.png")));
+					submissionReference.setVote(VoteDirection.NONE);
+					upVoteBtn.setOnMouseClicked(upVote());
+					downVoteBtn.setOnMouseClicked(downVote());
+				} catch (ApiException apie) {
+					//TOO MANY REQUESTS
+					Utils.toast("Too many requests.");
+				}
+			}
+		};
+	}
+
+	private EventHandler<MouseEvent> upVote() {
+		return new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent mouseEvent) {
+				try {
+					if (submissionReference == null) {
+						System.out.println("getting submission reference");
+						submissionReference = rc.getSubmissionReference(submission.getId());
+					}
+					submissionReference.upvote();
+					upVoteBtn.setGraphic(new ImageView(new Image("com/lb/jeddit/images/up-24-orange.png")));
+					downVoteBtn.setGraphic(new ImageView(new Image("com/lb/jeddit/images/down-24-grey.png")));
+					upVoteBtn.setOnMouseClicked(cancelVote());
+				} catch (ApiException apie) {
+					//TOO MANY REQUESTS
+					Utils.toast("Too many requests.");
+				}
+			}
+		};
+	}
+
+	private EventHandler<MouseEvent> downVote() {
+		return new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent mouseEvent) {
+				if(submissionReference==null) {
+					submissionReference = rc.getSubmissionReference(submission.getId());
+				}
+				submissionReference.downvote();
+				upVoteBtn.setGraphic(new ImageView(new Image("com/lb/jeddit/images/up-24-grey.png")));
+				downVoteBtn.setGraphic(new ImageView(new Image("com/lb/jeddit/images/down-24-blue.png")));
+				downVoteBtn.setOnMouseClicked(cancelVote());
+			}
+		};
+	}
 
 	public void setOpenPostEvent(boolean bool) {
 		if(bool) {
