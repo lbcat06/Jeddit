@@ -7,6 +7,8 @@ import com.lb.jeddit.Utils;
 import com.lb.jeddit.models.Client;
 import com.lb.jeddit.models.DynamicTextArea;
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -22,6 +24,7 @@ import net.dean.jraw.models.Subreddit;
 import net.dean.jraw.models.SubredditSort;
 import net.dean.jraw.models.TimePeriod;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -61,6 +64,9 @@ public class MainWindowController extends AnchorPane {
 
 	@FXML
 	private MenuButton menuButton;
+
+	@FXML
+	private TextField searchSubreddit;
 
 	/*************************************/
 
@@ -236,7 +242,44 @@ public class MainWindowController extends AnchorPane {
 		//Focused on background on startup
 		mainAnchorPane.requestFocus();
 		mainAnchorPane.setOnMouseClicked(Utils.requestFocusOnClick());
+
+		//Search through subscribed subreddits
+		searchSubreddit.textProperty().addListener(searchSubreddit());
 	}
+
+	private ChangeListener<String> searchSubreddit() {
+		return new ChangeListener<String>() {
+			@Override
+			public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
+
+				//If empty re-order in original order
+				if(searchSubreddit.getText().isBlank()) {
+					drawerSubs.getChildren().clear();
+					for(Button btn : subscriptions) {
+						drawerSubs.getChildren().add(btn);
+					}
+					return;
+				}
+
+				for(Button btn : subscriptions) {
+
+					//Remove if does not match what user is typing
+					if(!(btn.getText().contains(searchSubreddit.getText()))) {
+						drawerSubs.getChildren().remove(btn);
+					}
+
+					//If matches what user is typing but not currently present, add it.
+					else if(btn.getText().contains(searchSubreddit.getText()) &&
+							!drawerSubs.getChildren().contains(btn)) {
+						drawerSubs.getChildren().add(btn);
+					}
+
+				}
+			}
+		};
+	}
+
+	List<Button> subscriptions = new ArrayList<>();
 
 	//Add subscriptions to drawer
 	private void addSubscriptions() {
@@ -252,6 +295,7 @@ public class MainWindowController extends AnchorPane {
 					btn.setAlignment(Pos.CENTER_LEFT);
 					btn.setOnMouseClicked(e -> listPostsController.getSubreddit(subreddit.getName(), SubredditSort.HOT, TimePeriod.ALL));
 					btn.setId("subsBtn");
+					subscriptions.add(btn);
 
 					Platform.runLater(new Runnable() {
 						@Override
@@ -278,6 +322,7 @@ public class MainWindowController extends AnchorPane {
 
 		dynamicTextArea.setText(toast);
 		dynamicTextArea.setId("toast");
+		dynamicTextArea.addPadding(20);
 		dynamicTextArea.setComputeHeight(true);
 
 		//REMOVE TOAST AFTER 10 SECONDS

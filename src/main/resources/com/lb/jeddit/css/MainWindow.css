@@ -207,15 +207,18 @@
     -fx-font-size: 16px;
     -fx-text-fill: -fx-accent-2;
     -fx-background-color: -fx-secondary;
-    -fx-padding: 20px;
-    -fx-border-radius: 5px;
-    -fx-background-radius: 5px;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
 }
 
 #toast .content {
-    -fx-background-color: -fx-tertiary;
+    -fx-background-color: -fx-secondary;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
 }
 
 #toast .viewport {
-    -fx-background-color: -fx-tertiary;
+    -fx-background-color: -fx-secondary;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
 }

@@ -8,11 +8,11 @@ import javafx.scene.text.Text;
 public class DynamicTextArea extends TextArea {
 
 	private Text text = new Text();
-	private final int PADDING = 20;
 	private final int LINE_SPACING = 5;
 	private boolean computeHeight=false;
 	private boolean computeWidth=false;
 	private int count=0;
+	private int padding=0;
 
 	public DynamicTextArea() {
 		setEditable(false);
@@ -31,7 +31,7 @@ public class DynamicTextArea extends TextArea {
 		text.setWrappingWidth(getWidth());
 		text.setText(getText());
 
-		double textHeight = text.getBoundsInLocal().getHeight();
+		double textHeight = text.getBoundsInLocal().getHeight()+padding;
 
 		setHeight(textHeight);
 		setMaxHeight(textHeight);
@@ -52,7 +52,7 @@ public class DynamicTextArea extends TextArea {
 		text.setFont(getFont());
 		text.setText(getText());
 
-		double textWidth = text.getBoundsInLocal().getWidth();
+		double textWidth = text.getBoundsInLocal().getWidth()+padding;
 
 		setWidth(textWidth);
 		setMaxWidth(textWidth);
@@ -60,6 +60,10 @@ public class DynamicTextArea extends TextArea {
 		setPrefWidth(textWidth);
 
 		computeHeight();
+	}
+
+	public void addPadding(int padding) {
+		this.padding=padding;
 	}
 
 	@Override
