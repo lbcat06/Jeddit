@@ -66,6 +66,20 @@ public class Client {
 		return fetchSubmissionReference(id);
 	}
 
+	public Listing<Submission> searchSubmissions(int page, String query, SearchSort searchSort, TimePeriod timePeriod) {
+		if(page==1) {
+			submissionIterator = redditClient.search()
+					.query(query)
+					.limit(10)
+					.sorting(searchSort)
+					.timePeriod(timePeriod)
+					.build()
+					.iterator();
+		}
+
+		return submissionIterator.next();
+	}
+
 	public List<CommentNode> getSubmissionComments(String id) {
 		Iterator<CommentNode<PublicContribution<?>>> commentIterator = getSubmissionReference(id).comments().walkTree().iterator();
 

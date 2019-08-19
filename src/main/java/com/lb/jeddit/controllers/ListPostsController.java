@@ -6,6 +6,7 @@ import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
+import net.dean.jraw.models.SearchSort;
 import net.dean.jraw.models.Submission;
 import net.dean.jraw.models.SubredditSort;
 import net.dean.jraw.models.TimePeriod;
@@ -47,6 +48,19 @@ public class ListPostsController extends ScrollPane {
 	/** LOAD CARDS */
 
 	private static final int DEFAULT_ITERATION_COUNT = 5;
+
+	public void getSubmissionSearch(String query, SearchSort searchSort, TimePeriod timePeriod) {
+		clearPosts();
+
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				for(int i=1; i<DEFAULT_ITERATION_COUNT; i++) {
+					createSubmissionCard(rc.searchSubmissions(i, query, searchSort, timePeriod));
+				}
+			}
+		}).start();
+	}
 
 	public void getFrontPage(SubredditSort subredditSort, TimePeriod timePeriod, boolean loadingNew) {
 		clearPosts();
