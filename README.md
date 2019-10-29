@@ -1,5 +1,5 @@
-# JReddit
-JReddit is an open source reddit client available for Windows entirely written in Java.
+# Jeddit
+Jeddit is an open source reddit client available for Windows entirely written in Java.
 
 ## Features
 Free and Open Source Software - no ads/tracking; <br />
@@ -9,10 +9,8 @@ Built in media viewer; <br />
 Smooth scrolling <br />
 
 ## To-Do
-Subreddit Page <br />
 User Page <br />
 Client Settings <br />
-Allows Users to Comment <br />
 Private Messages <br />
 
 
@@ -30,4 +28,4 @@ Private Messages <br />
 Written with Java version 12.0.1 using the OpenJFX library for graphical interface.
 
 ## License
-JReddit is licensed under GNU General Public License v3.0. See [LICENSE](https://github.com/lbcat06/JReddit/blob/master/LICENSE) for more information.
+Jeddit is licensed under GNU General Public License v3.0. See [LICENSE](https://github.com/lbcat06/JReddit/blob/master/LICENSE) for more information.
